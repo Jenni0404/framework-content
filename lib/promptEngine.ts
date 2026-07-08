@@ -19,7 +19,7 @@ export type SujetMode = "idee" | "inspire";
 
 export const ROLES: Record<Objectif, Role[]> = {
   ATTRACTION: [
-    ["AT1", "Contradiction d'une croyance", "Affirmer l'inverse du consensus de la niche.", "tu", "Dissonance cognitive", "Remise en question, surprise", ""],
+    ["AT1", "Contradiction d'une croyance", "Affirmer l'inverse du consensus de la niche.", "tu", "Dissonance cognitive", "Remise en question, surprise", "Affirme d'abord la croyance répandue telle qu'elle circule vraiment dans la niche (une phrase, sans grimace), puis retourne-la net en une phrase courte et séparée — jamais fondues en une seule phrase mi-affirmation mi-retournement, le contraste doit se sentir entre les deux."],
     ["AT2", "Vérité qui dérange", "Réalité inconfortable que la cible évite de s'avouer.", "tu", "Biais d'évitement (on esquive ce qu'on sait déjà)", "Malaise reconnu, soulagement d'être vue", ""],
     ["AT3", "Prise de position polarisante", "Point de vue tranché, sans \"ça dépend\".", "mixte", "Effet de tribu (adhésion à un camp)", "Adhésion forte ou friction assumée", ""],
     ["AT4", "Chiffre/stat surprenante", "Nombre qui casse une croyance — jamais inventé.", "tu", "Ancrage numérique", "Étonnement", ""],
@@ -33,10 +33,10 @@ export const ROLES: Record<Objectif, Role[]> = {
     ["AT12", "Boucle de curiosité", "Créer un gap d'info à combler.", "tu", "Effet Zeigarnik (tension d'une info incomplète)", "Impatience, envie de savoir", ""],
     ["AT13", "Contenu utile sauvegardable", "Checklist ou étapes concrètes qu'on veut relire plus tard — pas un simple constat.", "tu", "Effet checklist / utilité perçue", "Soulagement, contrôle retrouvé", "Étapes numérotées, chacune une action concrète à faire, pas une observation — le contenu doit ressembler à une checklist qu'on coche, pas à un article."],
     ["AT14", "L'ennemi commun", "\"Le vrai problème c'est X, pas toi\".", "tu", "Biais de groupe (union contre une cause commune)", "Soulagement de ne pas être fautive", ""],
-    ["AT15", "Relatable / tag-a-friend", "Observation hyper-spécifique.", "tu", "Contagion sociale", "Complicité, amusement", ""],
+    ["AT15", "Relatable / tag-a-friend", "Observation hyper-spécifique.", "tu", "Contagion sociale", "Complicité, amusement", "N'utilise ce rôle que si un détail réel et précis (une situation, une observation vécue) est donné dans le contexte fourni plus bas — sans ça, ne force jamais une observation générique juste pour \"faire relatable\", choisis un autre rôle plutôt que du remplissage."],
   ],
   CONNEXION: [
-    ["CN1", "Storytelling / scène vécue", "Scène unique et précise, arc tu→je→tu.", "je", "Transportation narrative (immersion dans l'histoire)", "Empathie", ""],
+    ["CN1", "Storytelling / scène vécue", "Scène unique et précise, arc tu→je→tu.", "je", "Transportation narrative (immersion dans l'histoire)", "Empathie", "Raconte une scène digérée, jamais une blessure encore ouverte : avant d'écrire, vérifie si tu parles depuis une cicatrice (recul, compréhension) ou depuis une plaie encore brute — dans le doute, prends du recul sur la scène plutôt que d'exposer une vulnérabilité non résolue ou performative."],
     ["CN2", "Arc de transformation", "Avant/pendant/maintenant, résultat vécu.", "je", "Projection (on s'imagine dans le \"après\")", "Espoir", "3 temps explicites et distincts, un par groupe de slides : AVANT (l'état de départ précis) → PENDANT (le moment de bascule) → MAINTENANT (l'état actuel) — les 3 doivent être nommés clairement, pas fondus dans un récit flou."],
     ["CN3", "Miroir / nommer la douleur", "Nommer la douleur exacte, sans l'édulcorer.", "tu", "Validation émotionnelle", "Soulagement d'être comprise", ""],
     ["CN4", "Recadrage / modèle mental", "Croyance répandue → recadrage (pilier valeur/éducatif).", "mixte", "Dissonance cognitive résolue", "Clarté, déclic", "Structure en 2 temps nets : la croyance telle qu'elle est vraiment formulée dans la tête de la cible, puis le recadrage — jamais fondus dans la même phrase."],
@@ -44,20 +44,20 @@ export const ROLES: Record<Objectif, Role[]> = {
     ["CN6", "Ce qui a changé mon approche", "Déclic personnel honnête.", "je", "Autorité vécue (crédibilité par l'expérience)", "Confiance", ""],
     ["CN7", "Coulisses / authenticité", "L'envers du décor, pas juste le résultat.", "je", "Effet de transparence", "Proximité", ""],
     ["CN8", "Doute réel surmonté", "Un vrai doute + comment traversé.", "je", "Normalisation", "Réconfort", ""],
-    ["CN9", "Erreur / échec partagé", "Vulnérabilité utile, sans morale forcée.", "je", "Pratfall effect (on apprécie qui admet ses erreurs)", "Sympathie", ""],
+    ["CN9", "Erreur / échec partagé", "Vulnérabilité utile, sans morale forcée.", "je", "Pratfall effect (on apprécie qui admet ses erreurs)", "Sympathie", "Partage une erreur ou un échec déjà digéré, jamais une vulnérabilité encore brute : la question à te poser avant d'écrire est \"est-ce que je parle depuis une cicatrice ou une blessure encore ouverte ?\" — si la deuxième, recule d'un cran sur l'histoire plutôt que d'exposer une fragilité non résolue ou théâtralisée pour l'effet."],
     ["CN10", "Valeurs / opinion assumée", "Conviction personnelle — l'intimité.", "je", "Cohérence identitaire", "Adhésion", ""],
     ["CN11", "Bilan honnête", "Avancées ET blocages ensemble.", "je", "Authenticité perçue", "Confiance", ""],
     ["CN12", "Preuve à la taille de son état réel", "Preuve adaptée quand on est petite — filet anti-fabrication officiel, utilisé automatiquement en secours si aucune donnée réelle n'est fournie pour un rôle qui en réclame une.", "je", "Authenticité proportionnée (une preuve modeste mais vraie rassure plus qu'une preuve exagérée)", "Confiance sincère", ""],
     ["CN13", "Lettre à soi-même", "S'adresser à la version d'avant, à un moment précis et daté.", "je", "Distance temporelle (le conseil à soi-même devient universel)", "Tendresse, identification", "Adressée explicitement à un \"toi\" du passé à un moment précis (ex. \"à la moi d'il y a 2 ans\") — pas un conseil général déguisé en lettre."],
     ["CN14", "Ce que j'aurais voulu qu'on me dise", "Vérité comprise tard.", "mixte", "Effet de révélation tardive", "Gratitude", ""],
-    ["CN15", "Célébration d'une petite victoire", "Joie partagée, pas un bilan, sans surjeu.", "je", "Renforcement positif partagé", "Joie, fierté partagée", ""],
+    ["CN15", "Célébration d'une petite victoire", "Joie partagée, pas un bilan, sans surjeu.", "je", "Renforcement positif partagé", "Joie, fierté partagée", "N'utilise ce rôle que si une vraie petite victoire précise est donnée ou clairement déductible du contexte fourni plus bas — jamais une joie générique inventée pour occuper le rôle."],
     ["CN16", "Je ne sais pas encore", "Incertitude en cours, non résolue.", "je", "Humanisation (l'imperfection crédibilise)", "Complicité", ""],
     ["CN17", "Réponse à la communauté", "Répondre publiquement à une vraie question posée — format feed, pas story.", "mixte", "Réciprocité (répondre publiquement valorise qui a posé la question)", "Reconnaissance, appartenance", "La question réelle citée entre guillemets en ouverture, puis la réponse développée — jamais une réponse sans rappeler la question posée."],
-    ["CN18", "Origine / mission", "Le \"pourquoi j'ai commencé\" — si vrai et précis.", "je", "Cohérence narrative", "Attachement", ""],
+    ["CN18", "Origine / mission", "Le \"pourquoi j'ai commencé\" — si vrai et précis.", "je", "Cohérence narrative", "Attachement", "N'utilise ce rôle que si une vraie histoire de départ (le déclic, le moment précis qui a lancé l'offre ou l'activité) est donnée dans le contexte fourni plus bas — si rien de tel n'est fourni, ne l'invente jamais : choisis un autre rôle Connexion plutôt que de fabriquer une origin story."],
   ],
   CONVERSION: [
     ["CV2", "Démonstration concrète", "Montrer l'offre en action, étape par étape.", "tu", "Preuve par la démonstration (moins abstrait = plus crédible)", "Confiance rationnelle", ""],
-    ["CV3", "Objection + réponse", "LA objection principale démolie depuis le vécu.", "tu", "Réduction de la dissonance pré-achat", "Soulagement", "2 temps par slide ou par paire de slides : l'objection formulée EXACTEMENT comme la cible la penserait (entre guillemets, à la première personne), puis la réponse — jamais résumée en une seule phrase neutre."],
+    ["CV3", "Objection + réponse", "LA objection principale démolie depuis le vécu.", "tu", "Réduction de la dissonance pré-achat", "Soulagement", "2 temps par slide ou par paire de slides : l'objection formulée EXACTEMENT comme la cible la penserait (entre guillemets, à la première personne), puis la réponse — jamais résumée en une seule phrase neutre. Utilise une phrase-pivot du type \"Maintenant tu vas me dire...\" ou équivalent pour amorcer la bascule entre objection et réponse — ça rend la transition explicite plutôt qu'implicite."],
     ["CV5", "Comparaison avec / sans l'offre", "Vie avant/après — factuel.", "tu", "Aversion à la perte", "Motivation", "Slides strictement alternées \"Sans l'offre : ...\" / \"Avec l'offre : ...\", même structure de phrase des deux côtés — jamais un paragraphe qui mélange les deux."],
     ["CV6", "Vente directe assumée", "Prix, comment l'avoir. CTA direct.", "tu", "Effet de simplicité (clarté = confiance)", "Sécurité", ""],
     ["CV7", "Urgence réelle", "Raison honnête d'agir — jamais fausse rareté.", "tu", "Rareté", "Urgence légitime", ""],
@@ -107,10 +107,11 @@ RÈGLE DE TON, NON NÉGOCIABLE — évite absolument le style lisse/générique 
 - Un détail concret et spécifique (un objet, un moment précis, un chiffre réel) vaut toujours mieux qu'une généralité, même bien tournée.
 - Assume un point de vue tranché plutôt qu'une position équilibrée et prudente — un contenu qui ne dérange jamais personne ne marque personne.
 - Varie la longueur des phrases dans un même paragraphe — l'IA par défaut a tendance à produire des phrases toutes calibrées pareil, une vraie voix ne fait jamais ça.
+- Un hook n'a pas besoin d'être un uppercut en une seule phrase : il peut monter en cascade sur 2-3 phrases courtes qui creusent le même constat avant de basculer sur la vraie affirmation — cette montée progressive est aussi valide qu'une phrase-choc unique, ne réduis pas systématiquement à une seule ligne sèche.
 
 ANTI-PATTERNS DE HOOK À NE JAMAIS PRODUIRE : "Aujourd'hui je vous parle de…", "Salut moi c'est…", "Je m'appelle…" en ouverture, hooks vagues, non ciblés, alarmistes, fausses promesses, hook à rallonge.
 
-RÈGLE R3 — ANTI-CLICHÉ : détecte les patterns de hook usés et cliché et reformule-les toujours en version incarnée et spécifique à CETTE niche précise, jamais un hook cliché brut, même bien tourné.
+RÈGLE R3 — ANTI-CLICHÉ : détecte les patterns de hook usés et cliché et reformule-les toujours en version incarnée et spécifique à CETTE niche précise, jamais un hook cliché brut, même bien tourné. Exemple concret du principe : ne dis jamais "3 erreurs que tout le monde fait" — dis plutôt "l'erreur que je vois chez 9 clientes sur 10, et que j'ai faite aussi" ; ne dis jamais une comparaison abstraite du type "avant vs après" à plat — incarne-la dans une scène vécue, comme "le post que personne ne regarde vs celui qui fait répondre".
 
 RÈGLE — TOUJOURS CONVERTIR L'INFO EN ACTION UNIQUE : ne livre jamais une information brute sans la transformer en une action unique, concrète, que la lectrice peut faire immédiatement — particulièrement important pour AT13 (contenu sauvegardable) et toute slide de valeur.
 
@@ -184,6 +185,13 @@ export const storyFrame1Role: Record<Objectif, string> = {
   CONVERSION: `NOMMER L'OBJECTION : le doute ou l'objection réelle que la cible a en tête à cet instant précis, formulé comme elle le penserait elle-même — ne le résous surtout pas ici, le recadrage viendra seulement à la frame suivante.`,
 };
 
+// Émotion à viser AVANT la formulation d'un hook (pas seulement le sujet) — cohérente avec l'objectif.
+export const hookEmotionGuide: Record<Objectif, string> = {
+  ATTRACTION: "reconnaissance, surprise ou déclic",
+  CONNEXION: "reconnaissance, déclic ou un sentiment d'être comprise",
+  CONVERSION: "déclic ou une vraie envie d'agir",
+};
+
 export interface GenContext {
   offreType: string;
   offre: string;
@@ -254,6 +262,14 @@ Format de réponse STRICT : si un sujet doit être choisi par toi, une ligne "SU
 Chaque amorce doit explorer une variante différente du même angle imposé, dans un registre parlé/conversationnel, jamais dans un registre "post". IMPORTANT : les 3 propositions doivent TOUTES viser le niveau Excellent du gradient de qualité donné plus haut — ne produis JAMAIS volontairement une version faible ou moyenne parmi les 3 pour "varier". La variation doit porter sur le mécanisme/l'angle choisi à l'intérieur de chaque amorce, pas sur le niveau de qualité entre les 3.`
     : `Tu génères UNIQUEMENT 3 propositions de hook pour un post Instagram, rien d'autre. Pas de slides, pas de légende, pas de préambule.
 
+AVANT D'ÉCRIRE, DÉCIDE L'ÉMOTION VISÉE — PAS SEULEMENT LE SUJET : demande-toi d'abord "qu'est-ce que je veux qu'elle ressente en lisant ça ?" parmi ${hookEmotionGuide[ctx.objectif]} (cohérent avec l'objectif ${ctx.objectif}) — choisis l'émotion AVANT de choisir les mots, jamais l'inverse.
+
+EXEMPLES CALIBRÉS DE CE QUI SONNE JUSTE (le principe à atteindre, pas le fond à copier) :
+- Contradiction en 2 temps (croyance affirmée, puis retournée net) : "On te dit qu'il faut poster tous les jours pour percer. Faux. L'audience qui achète, tu la construis avec 3 posts qui disent vraiment quelque chose."
+- Montée en cascade avant la bascule (2-3 phrases courtes qui creusent le même constat) : "Tu retouches ton offre pour la 4e fois ce mois-ci. Tu changes le prix. Tu changes le nom. Le problème, c'était jamais ça."
+- Durée courte + durée longue (ancre la crédibilité par la constance) : "Les 10 minutes que je passe chaque matin à relire mes 3 derniers posts, ça fait 2 ans que je fais ça, et c'est ce qui a le plus changé mes ventes."
+CE QUI SONNE FAUX (à éviter) : une promesse générique du type "comment faire X" sans tension ni affirmation personnelle — un hook qui informe mais ne déstabilise rien ne retient jamais un scroll.
+
 ${SHARED_RULES}${voiceInstructionHooks}
 
 Format de réponse STRICT : si un sujet doit être choisi par toi, une ligne "SUJET CHOISI : [sujet]" en premier, sinon rien avant. Puis exactement 3 lignes :
@@ -302,16 +318,27 @@ export function buildFullPrompt(ctx: GenContext, chosenHook: string): PromptPair
     ? `\n\nVOIX À REPRODUIRE, RÈGLE QUI PRIME SUR TOUT LE RESTE : voici un échantillon réel de comment cette personne parle : "${ctx.voix}". N'écris PAS dans un français plus soutenu que cet échantillon — repère ses expressions, ses images, son rythme, et réutilise ce registre précis dans le corps du gabarit, pas juste dans le hook. Reprends le même niveau de familiarité, le même rythme de phrase, les mêmes types de mots. Si l'échantillon utilise des tournures orales, des phrases coupées, une ponctuation relâchée (points d'interrogation en cascade, tirets, etc.) — fais pareil PARTOUT dans le texte, légende comprise, pas seulement au début. Un texte plus "propre" ou plus "littéraire" que l'échantillon est un ÉCHEC, même s'il est grammaticalement correct — la règle de grammaire impeccable ne t'autorise jamais à lisser le ton.`
     : "";
 
+  const reelHookGuide: Record<Objectif, string> = {
+    ATTRACTION: "lisible même sans le son (la moitié des vues se font muettes) — une idée disruptive qui se comprend au premier coup d'œil du texte à l'écran",
+    CONNEXION: "un miroir de douleur ultra-court — une phrase qui fait dire \"c'est moi\" dès la première seconde",
+    CONVERSION: "un problème ou un chiffre nommé directement, sans détour émotionnel — la précision prime sur l'émotion ici",
+  };
+  const reelDurationGuide: Record<Objectif, string> = {
+    ATTRACTION: "7 à 15 secondes",
+    CONNEXION: "15 à 30 secondes",
+    CONVERSION: "15 à 30 secondes",
+  };
+
   const reelInstruction =
     ctx.format === "Reel"
-      ? ctx.reelType === "parle"
-        ? `\n\nSTRUCTURE REEL PARLÉ (choisi) — 3 éléments distincts :
-1. TEXTE À L'ÉCRAN : le hook fourni tel quel, affiché en overlay.
-2. SCRIPT PARLÉ COMPLET, OBLIGATOIRE : écris mot pour mot ce qu'elle dit à la caméra, du hook jusqu'à la fin — c'est ici que TOUT le développement (l'angle, la valeur, la preuve) est dit à l'oral. Rythme oral, phrases courtes, comme si elle parlait vraiment.
-3. LÉGENDE COMPLÉMENTAIRE (pas un résumé du script) : puisque l'essentiel a déjà été dit à l'oral, la légende n'a pas besoin de réexpliquer — elle ajoute une couche différente (contexte, un détail non dit à l'oral, ou renforce le CTA), reste courte, ouverture distincte du hook, CTA selon objectif, hashtags.`
-        : `\n\nSTRUCTURE REEL COURT (choisi) — 2 éléments distincts :
+      ? `\n\nHOOK REEL SELON L'OBJECTIF ${ctx.objectif} : ${reelHookGuide[ctx.objectif]}. Durée cible du Reel : ${reelDurationGuide[ctx.objectif]}.` +
+        (ctx.reelType === "parle"
+          ? `\n\nSTRUCTURE REEL PARLÉ (choisi) — 2 éléments distincts, PAS un talking-head développé (un script parlé complet du début à la fin ne performe pas en pratique, quel que soit l'angle — c'est le modèle des pubs payantes, pas la réalité terrain) :
+1. HOOK DIT ET AFFICHÉ À L'ÉCRAN, COURT : le hook fourni tel quel, dit à la caméra et affiché en overlay, sur la durée ci-dessus. Rien d'autre développé à l'oral après le hook — pas d'agitation, pas de preuve, pas de CTA parlé : coupe juste après le hook.
+2. LÉGENDE COMPLÈTE, OBLIGATOIRE : c'est ELLE qui porte tout le développement AIDA (l'angle, la valeur, la preuve, le CTA) — exactement comme pour un Reel court, jamais raccourcie sous prétexte qu'un hook a été dit à l'oral. Ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, hashtags.`
+          : `\n\nSTRUCTURE REEL COURT (choisi) — 2 éléments distincts :
 1. TEXTE À L'ÉCRAN : le hook fourni tel quel, SEUL affiché à l'écran du début à la fin (pas de script parlé développé — le Reel est visuel/rythmé, pas un talking head qui explique). Ajoute un repère visuel de CTA à l'écran si pertinent (ex. "👇 suite en légende").
-2. LÉGENDE COMPLÈTE, OBLIGATOIRE : puisque rien n'est développé à l'oral, c'est ELLE qui porte tout le développement AIDA (l'angle, la valeur, la preuve, le CTA) — jamais raccourcie sous prétexte que le hook est déjà à l'écran. Ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, hashtags.`
+2. LÉGENDE COMPLÈTE, OBLIGATOIRE : puisque rien n'est développé à l'oral, c'est ELLE qui porte tout le développement AIDA (l'angle, la valeur, la preuve, le CTA) — jamais raccourcie sous prétexte que le hook est déjà à l'écran. Ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, hashtags.`)
       : "";
 
   const storyInstruction =
@@ -341,7 +368,7 @@ PONT STORY → DM, ÉLÉMENT OBLIGATOIRE ET DISTINCT (à écrire après les fram
 
   const carrouselInstruction =
     ctx.format === "Carrousel"
-      ? `\n\nSTRUCTURE CARROUSEL (8-10 slides, sauf structure spécifique fournie plus bas) : Slide 1 = hook fourni tel quel → Rétention (tient seule) → Valeur (1 idée/slide, 2-3 phrases) → Récap (reformule) → CTA (mot-clé + bénéfice). Puis une LÉGENDE complète et OBLIGATOIRE (jamais omise) : ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, 3-5 hashtags ciblés.`
+      ? `\n\nSTRUCTURE CARROUSEL (8-10 slides, sauf structure spécifique fournie plus bas) : Slide 1 = hook fourni tel quel → Slide 2 = Rétention, ET DOIT CONTENIR SON PROPRE HOOK (l'algorithme peut réafficher le carrousel en commençant directement à cette slide — elle doit donc tenir seule, pas seulement enchaîner sur la slide 1) → Valeur (1 idée/slide, un titre court de 5-7 mots + 2-3 phrases) → Récap (ne te contente jamais de reformuler ce qui précède : ajoute un bonus ou un angle non mentionné avant) → CTA (mot-clé + bénéfice). Puis une LÉGENDE complète et OBLIGATOIRE (jamais omise) : ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, 3-5 hashtags ciblés.`
       : "";
 
   const system = `Tu remplis le CORPS COMPLET d'un gabarit de contenu Instagram — ${
