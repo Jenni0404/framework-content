@@ -28,12 +28,16 @@ export async function POST(req: Request) {
 
   try {
     const { system, user } = buildHooksPrompt(ctx);
+    // `thinking: disabled` : sans ça, le raisonnement interne de Sonnet 5 consomme le budget
+    // de max_tokens avant le texte visible (même cause que le bug de troncature déjà traité
+    // sur generate-full/route.ts, jamais reportée ici) ; cast nécessaire, cf. generate-full/route.ts.
     const message = await anthropic.messages.create({
       model: "claude-sonnet-5",
-      max_tokens: 350,
+      max_tokens: 500,
+      thinking: { type: "disabled" },
       system,
       messages: [{ role: "user", content: user }],
-    });
+    } as unknown as Anthropic.MessageCreateParamsNonStreaming);
     const output = message.content
       .filter((b) => b.type === "text")
       .map((b) => (b as { text: string }).text)

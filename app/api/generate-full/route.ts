@@ -30,21 +30,54 @@ export async function POST(req: Request) {
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+  const MAX_TOKENS_PER_CALL = 4096;
+  const MAX_CONTINUATIONS = 2;
+
   try {
     const { system, user } = buildFullPrompt(body, body.chosenHook);
-    const message = await anthropic.messages.create({
-      model: "claude-sonnet-5",
-      max_tokens: 2200,
-      system,
-      messages: [{ role: "user", content: user }],
-    });
-    const text = message.content
-      .filter((b) => b.type === "text")
-      .map((b) => (b as { text: string }).text)
-      .join("\n")
-      .trim();
+    const messages: Anthropic.MessageParam[] = [{ role: "user", content: user }];
 
-    return NextResponse.json({ ok: true, text });
+    let text = "";
+    let stopReason: string | null = null;
+    let lastUsage: Anthropic.Usage | undefined;
+
+    for (let attempt = 0; attempt <= MAX_CONTINUATIONS; attempt++) {
+      // `thinking` existe côté API mais pas encore dans les types de @anthropic-ai/sdk@0.27.3 installé ;
+      // le SDK transmet le body tel quel au runtime, seul le type-check a besoin de ce cast.
+      const message = await anthropic.messages.create({
+        model: "claude-sonnet-5",
+        max_tokens: MAX_TOKENS_PER_CALL,
+        thinking: { type: "disabled" },
+        system,
+        messages,
+      } as unknown as Anthropic.MessageCreateParamsNonStreaming);
+      const chunk = message.content
+        .filter((b) => b.type === "text")
+        .map((b) => (b as { text: string }).text)
+        .join("\n");
+
+      text += chunk;
+      stopReason = message.stop_reason;
+      lastUsage = message.usage;
+
+      if (stopReason !== "max_tokens" || attempt === MAX_CONTINUATIONS) break;
+
+      messages.push(
+        { role: "assistant", content: chunk },
+        {
+          role: "user",
+          content:
+            "Continue exactement là où tu t'es arrêté, sans rien répéter, jusqu'à la fin complète du gabarit (légende et hashtags compris si applicable).",
+        }
+      );
+    }
+
+    return NextResponse.json({
+      ok: true,
+      text: text.trim(),
+      truncated: stopReason === "max_tokens",
+      debug: { stop_reason: stopReason, usage: lastUsage },
+    });
   } catch (err) {
     return NextResponse.json(
       {

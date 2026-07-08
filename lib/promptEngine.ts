@@ -128,6 +128,31 @@ L'angle de crédibilité s'adapte au type d'offre fourni — une coach ne "prouv
 
 export const NEEDS_PROOF = ["CV1", "CV4", "CV9"];
 
+// Vue publique et minimale d'un rôle, sûre à exposer au client (jamais SHARED_RULES/CTA_INFO/storyTunnels).
+export interface RoleOption {
+  id: string;
+  nom: string;
+  description: string;
+  registre: string;
+  needsProof: boolean;
+}
+
+export function getRoleOptionsMap(): Record<Objectif, RoleOption[]> {
+  const objectifs: Objectif[] = ["ATTRACTION", "CONNEXION", "CONVERSION"];
+  return Object.fromEntries(
+    objectifs.map((objectif) => [
+      objectif,
+      ROLES[objectif].map(([id, nom, description, registre]) => ({
+        id,
+        nom,
+        description,
+        registre,
+        needsProof: NEEDS_PROOF.includes(id),
+      })),
+    ])
+  ) as Record<Objectif, RoleOption[]>;
+}
+
 export const CTA_INFO: Record<Objectif, { cta: string; pourquoi: string }> = {
   ATTRACTION: { cta: "Partage / sauvegarde / abonnement", pourquoi: "en Attraction, l'objectif est de convertir l'attention en portée (partage) ou en mémorisation (sauvegarde) — jamais une vente directe, une inconnue n'est pas encore prête." },
   CONNEXION: { cta: "Réponse / commentaire / partage à une amie", pourquoi: "en Connexion, l'objectif est d'ouvrir un dialogue réel pour construire la confiance avant toute idée de vente." },
