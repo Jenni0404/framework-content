@@ -1,12 +1,20 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { buildHooksPrompt, parseHooksResponse, type GenContext } from "@/lib/promptEngine";
+import { checkRateLimit, getClientKey } from "@/lib/rateLimit";
 
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
       { ok: false, error: "ANTHROPIC_API_KEY manquante dans .env.local" },
       { status: 500 }
+    );
+  }
+
+  if (!checkRateLimit(getClientKey(req), 10, 60_000)) {
+    return NextResponse.json(
+      { ok: false, error: "Trop de générations en peu de temps — réessaie dans une minute." },
+      { status: 429 }
     );
   }
 

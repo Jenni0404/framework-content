@@ -621,6 +621,12 @@ export default function Home() {
             </div>
           </div>
         )}
+
+        <footer className="mt-10 pt-4 border-t text-xs text-gray-400 flex gap-3 justify-center">
+          <a href="/mentions-legales" className="hover:underline">Mentions légales</a>
+          <a href="/confidentialite" className="hover:underline">Confidentialité</a>
+          <a href="/cgv" className="hover:underline">CGV</a>
+        </footer>
       </div>
     </main>
   );

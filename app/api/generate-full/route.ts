@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { buildFullPrompt, type GenContext } from "@/lib/promptEngine";
+import { checkRateLimit, getClientKey } from "@/lib/rateLimit";
 
 interface GenerateFullBody extends GenContext {
   chosenHook: string;
@@ -11,6 +12,13 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, error: "ANTHROPIC_API_KEY manquante dans .env.local" },
       { status: 500 }
+    );
+  }
+
+  if (!checkRateLimit(getClientKey(req), 5, 60_000)) {
+    return NextResponse.json(
+      { ok: false, error: "Trop de générations en peu de temps — réessaie dans une minute." },
+      { status: 429 }
     );
   }
 
