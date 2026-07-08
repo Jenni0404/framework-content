@@ -32,17 +32,30 @@ interface LibraryEntry {
 
 const LIBRARY_STORAGE_KEY = "gabarit-library";
 
-const OBJECTIFS: { value: Objectif; label: string }[] = [
-  { value: "ATTRACTION", label: "Attraction — s'arrêter" },
-  { value: "CONNEXION", label: "Connexion — confiance" },
-  { value: "CONVERSION", label: "Conversion — décision" },
+const OBJECTIFS: { value: Objectif; label: string; ratio: string }[] = [
+  { value: "ATTRACTION", label: "Attraction — s'arrêter", ratio: "40%" },
+  { value: "CONNEXION", label: "Connexion — confiance", ratio: "30%" },
+  { value: "CONVERSION", label: "Conversion — décision", ratio: "30%" },
 ];
+
+const OBJECTIF_RATIO_STYLE: Record<Objectif, string> = {
+  ATTRACTION: "bg-sage-100 text-ink",
+  CONNEXION: "bg-sage-700 text-cream",
+  CONVERSION: "bg-sage-300 text-cream",
+};
 
 const FORMATS: { value: Format; label: string }[] = [
   { value: "Carrousel", label: "Carrousel" },
   { value: "Reel", label: "Reel" },
   { value: "Story", label: "Story (tunnel 4 frames)" },
 ];
+
+const inputClass =
+  "w-full border border-sage-100 rounded-md p-2 text-sm bg-white focus:outline-none focus:border-sage-700";
+const toggleBaseClass = "flex-1 rounded-md border border-sage-100 py-2 text-sm font-medium transition-colors";
+const toggleActiveClass = "bg-sage-700 text-cream border-sage-700";
+const ghostButtonClass =
+  "rounded-md border border-sage-700 text-sage-700 font-medium hover:bg-sage-50 transition-colors";
 
 export default function Home() {
   const [formOptions, setFormOptions] = useState<FormOptions | null>(null);
@@ -247,10 +260,10 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen p-8 flex justify-center">
+    <main className="min-h-screen p-8 flex justify-center bg-cream">
       <div className="w-full max-w-2xl">
-        <h1 className="text-2xl font-semibold mb-1">Générateur de gabarit</h1>
-        <p className="text-sm text-gray-500 mb-6">
+        <h1 className="font-serif text-3xl font-semibold text-sage-800 mb-1">Générateur de gabarit</h1>
+        <p className="text-sm text-sage-300 mb-6">
           Étape 1 : choisis ton contexte et ton angle. Étape 2 : choisis ton{" "}
           {elementLabel} parmi 3, puis récupère le post complet.
         </p>
@@ -259,9 +272,9 @@ export default function Home() {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium mb-1">Type d&apos;offre</label>
+                <label className="block text-sm font-medium text-ink mb-1">Type d&apos;offre</label>
                 <select
-                  className="w-full border rounded-md p-2 text-sm"
+                  className={inputClass}
                   value={offreType}
                   onChange={(e) => setOffreType(e.target.value)}
                 >
@@ -273,9 +286,9 @@ export default function Home() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Objectif</label>
+                <label className="block text-sm font-medium text-ink mb-1">Objectif</label>
                 <select
-                  className="w-full border rounded-md p-2 text-sm"
+                  className={inputClass}
                   value={objectif}
                   onChange={(e) => setObjectif(e.target.value as Objectif)}
                 >
@@ -285,15 +298,27 @@ export default function Home() {
                     </option>
                   ))}
                 </select>
+                <div className="flex gap-1 mt-1.5 text-[10px] font-semibold">
+                  {OBJECTIFS.map((o) => (
+                    <span
+                      key={o.value}
+                      className={`flex-1 text-center rounded py-1 ${OBJECTIF_RATIO_STYLE[o.value]} ${
+                        o.value === objectif ? "ring-2 ring-sage-800" : "opacity-70"
+                      }`}
+                    >
+                      {o.ratio}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-medium text-ink mb-1">
                 Parle-moi de cette offre précise et de ta cliente
               </label>
               <textarea
-                className="w-full border rounded-md p-2 text-sm min-h-[70px]"
+                className={`${inputClass} min-h-[70px]`}
                 placeholder="Ex : programme nutrition 3 mois, pour des mamans fatiguées qui n'ont pas le temps de cuisiner sainement"
                 value={offre}
                 onChange={(e) => setOffre(e.target.value)}
@@ -301,22 +326,18 @@ export default function Home() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Le sujet du jour</label>
+              <label className="block text-sm font-medium text-ink mb-1">Le sujet du jour</label>
               <div className="flex gap-2 mb-2">
                 <button
                   type="button"
-                  className={`flex-1 rounded-md border py-2 text-sm font-medium ${
-                    sujetMode === "idee" ? "bg-emerald-700 text-white border-emerald-700" : ""
-                  }`}
+                  className={`${toggleBaseClass} ${sujetMode === "idee" ? toggleActiveClass : "text-ink"}`}
                   onClick={() => setSujetMode("idee")}
                 >
                   J&apos;ai déjà une idée
                 </button>
                 <button
                   type="button"
-                  className={`flex-1 rounded-md border py-2 text-sm font-medium ${
-                    sujetMode === "inspire" ? "bg-emerald-700 text-white border-emerald-700" : ""
-                  }`}
+                  className={`${toggleBaseClass} ${sujetMode === "inspire" ? toggleActiveClass : "text-ink"}`}
                   onClick={() => setSujetMode("inspire")}
                 >
                   Inspire-moi
@@ -324,23 +345,23 @@ export default function Home() {
               </div>
               {sujetMode === "idee" && (
                 <input
-                  className="w-full border rounded-md p-2 text-sm"
+                  className={inputClass}
                   placeholder="De quoi veux-tu parler aujourd'hui ?"
                   value={sujet}
                   onChange={(e) => setSujet(e.target.value)}
                 />
               )}
               {sujetMode === "inspire" && (
-                <p className="text-xs italic text-gray-500">
+                <p className="text-xs italic text-sage-300">
                   Le moteur va choisir lui-même un sujet pertinent selon ton offre et ton angle.
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Angle précis</label>
+              <label className="block text-sm font-medium text-ink mb-1">Angle précis</label>
               <select
-                className="w-full border rounded-md p-2 text-sm"
+                className={inputClass}
                 value={roleId}
                 onChange={(e) => setRoleId(e.target.value)}
               >
@@ -351,7 +372,7 @@ export default function Home() {
                 ))}
               </select>
               {selectedRole && (
-                <p className="text-xs text-gray-600 border rounded-md p-2 mt-2">
+                <p className="text-xs text-ink/80 border border-sage-100 bg-sage-50 rounded-md p-2 mt-2">
                   {selectedRole.description} (registre : {selectedRole.registre})
                 </p>
               )}
@@ -359,26 +380,26 @@ export default function Home() {
 
             {showPreuve && (
               <div>
-                <label className="block text-sm font-medium mb-1">Donnée réelle à utiliser</label>
+                <label className="block text-sm font-medium text-ink mb-1">Donnée réelle à utiliser</label>
                 <input
-                  className="w-full border rounded-md p-2 text-sm"
+                  className={inputClass}
                   placeholder="Ex : 12 clientes accompagnées, 3 ventes ce mois-ci"
                   value={preuve}
                   onChange={(e) => setPreuve(e.target.value)}
                 />
-                <p className="text-xs italic text-gray-500 mt-1">
+                <p className="text-xs italic text-sage-300 mt-1">
                   Vide = le gabarit reste qualitatif, jamais de chiffre inventé.
                 </p>
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-medium text-ink mb-1">
                 Ta voix, comme tu parlerais à une amie un soir sans filtre{" "}
-                <span className="font-normal text-gray-400">(optionnel)</span>
+                <span className="font-normal text-sage-300">(optionnel)</span>
               </label>
               <textarea
-                className="w-full border rounded-md p-2 text-sm min-h-[50px]"
+                className={`${inputClass} min-h-[50px]`}
                 placeholder="Une phrase suffit"
                 value={voix}
                 onChange={(e) => setVoix(e.target.value)}
@@ -386,9 +407,9 @@ export default function Home() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Format</label>
+              <label className="block text-sm font-medium text-ink mb-1">Format</label>
               <select
-                className="w-full border rounded-md p-2 text-sm"
+                className={inputClass}
                 value={format}
                 onChange={(e) => setFormat(e.target.value as Format)}
               >
@@ -402,32 +423,28 @@ export default function Home() {
 
             {format === "Reel" && (
               <div>
-                <label className="block text-sm font-medium mb-1">Type de Reel</label>
+                <label className="block text-sm font-medium text-ink mb-1">Type de Reel</label>
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className={`flex-1 rounded-md border py-2 text-sm font-medium ${
-                      reelType === "court" ? "bg-emerald-700 text-white border-emerald-700" : ""
-                    }`}
+                    className={`${toggleBaseClass} ${reelType === "court" ? toggleActiveClass : "text-ink"}`}
                     onClick={() => setReelType("court")}
                   >
                     Reel court (juste le hook à l&apos;écran)
                   </button>
                   <button
                     type="button"
-                    className={`flex-1 rounded-md border py-2 text-sm font-medium ${
-                      reelType === "parle" ? "bg-emerald-700 text-white border-emerald-700" : ""
-                    }`}
+                    className={`${toggleBaseClass} ${reelType === "parle" ? toggleActiveClass : "text-ink"}`}
                     onClick={() => setReelType("parle")}
                   >
-                    Reel parlé (script complet)
+                    Reel parlé (hook dit + légende complète)
                   </button>
                 </div>
               </div>
             )}
 
             <button
-              className="w-full rounded-md bg-emerald-700 text-white font-semibold py-3 disabled:bg-gray-400"
+              className="w-full rounded-md bg-sage-700 text-cream font-semibold py-3 disabled:bg-sage-300 hover:bg-sage-800 transition-colors"
               disabled={loadingHooks}
               onClick={handleStep1}
             >
@@ -442,12 +459,12 @@ export default function Home() {
         )}
 
         {step === 2 && (
-          <div className="space-y-4 mt-4 pt-4 border-t">
-            <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700">
+          <div className="space-y-4 mt-4 pt-4 border-t border-sage-100">
+            <p className="text-xs font-semibold uppercase tracking-wide text-sage-700">
               {isStory ? "Choisis l'amorce qui te parle le plus" : "Choisis le hook qui te parle le plus"}
             </p>
             {sujetChoisi && sujetMode === "inspire" && (
-              <p className="text-sm font-medium text-emerald-700">Sujet choisi : {sujetChoisi}</p>
+              <p className="text-sm font-medium text-sage-700">Sujet choisi : {sujetChoisi}</p>
             )}
 
             <div className="space-y-2">
@@ -457,8 +474,8 @@ export default function Home() {
                   type="button"
                   disabled={loadingFull}
                   onClick={() => handleHookClick(hook)}
-                  className={`w-full text-left border rounded-lg p-3 text-sm hover:border-emerald-700 disabled:opacity-50 ${
-                    chosenHook === hook ? "border-emerald-700" : ""
+                  className={`w-full text-left border rounded-lg p-3 text-sm hover:border-sage-700 disabled:opacity-50 transition-colors ${
+                    chosenHook === hook ? "border-sage-700 bg-sage-50" : "border-sage-100"
                   }`}
                 >
                   {hook}
@@ -467,7 +484,7 @@ export default function Home() {
             </div>
 
             {loadingFull && (
-              <p className="text-sm italic text-gray-500">
+              <p className="text-sm italic text-sage-300">
                 Je construis le post complet avec ce hook… (jusqu&apos;à 60-90 secondes)
               </p>
             )}
@@ -480,34 +497,30 @@ export default function Home() {
                     ⚠️ Le texte a peut-être été coupé malgré la relance automatique — régénère si besoin.
                   </p>
                 )}
-                <pre className="whitespace-pre-wrap border rounded-md p-4 text-sm bg-gray-50">
+                <pre className="whitespace-pre-wrap border border-sage-100 rounded-md p-4 text-sm bg-sage-50 text-ink">
                   {fullText}
                 </pre>
                 <div className="flex gap-2 mt-2">
-                  <button
-                    type="button"
-                    onClick={handleCopy}
-                    className="flex-1 rounded-md border border-emerald-700 text-emerald-700 py-2 text-sm font-medium"
-                  >
+                  <button type="button" onClick={handleCopy} className={`flex-1 py-2 text-sm ${ghostButtonClass}`}>
                     {copied ? "Copié ✓" : "📋 Copier"}
                   </button>
                   <button
                     type="button"
                     onClick={handleSaveToLibrary}
-                    className="flex-1 rounded-md border border-emerald-700 text-emerald-700 py-2 text-sm font-medium"
+                    className={`flex-1 py-2 text-sm ${ghostButtonClass}`}
                   >
                     💾 Enregistrer
                   </button>
                 </div>
                 {saveConfirm && (
-                  <p className="text-xs text-emerald-700 mt-1">{saveConfirm}</p>
+                  <p className="text-xs text-sage-700 mt-1">{saveConfirm}</p>
                 )}
 
                 {selectedRole && formOptions && (() => {
                   const ctaInfo = (isStory ? formOptions.ctaInfoStory : formOptions.ctaInfo)[objectif];
                   return (
-                    <div className="bg-emerald-700 text-white rounded-md p-4 mt-3 text-sm space-y-2">
-                      <p className="font-serif font-semibold">
+                    <div className="bg-sage-700 text-cream rounded-md p-4 mt-3 text-sm space-y-2">
+                      <p className="font-serif font-semibold text-base">
                         Pourquoi ce post a été construit comme ça
                       </p>
                       <div className="flex gap-2">
@@ -551,7 +564,7 @@ export default function Home() {
             <button
               type="button"
               onClick={handleRestart}
-              className="w-full rounded-md border py-2 text-sm font-medium text-emerald-700"
+              className={`w-full py-2 text-sm ${ghostButtonClass}`}
             >
               Modifier le contexte
             </button>
@@ -560,14 +573,14 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setLibraryOpen((v) => !v)}
-                className="text-sm font-semibold text-emerald-700"
+                className="text-sm font-semibold text-sage-700"
               >
                 📚 Mes contenus sauvegardés ({library.length})
               </button>
               {libraryOpen && (
                 <div className="mt-2 space-y-2 max-h-80 overflow-y-auto">
                   {library.length === 0 && (
-                    <p className="text-xs text-gray-500">Rien d&apos;enregistré pour l&apos;instant.</p>
+                    <p className="text-xs text-sage-300">Rien d&apos;enregistré pour l&apos;instant.</p>
                   )}
                   {library
                     .slice()
@@ -581,32 +594,32 @@ export default function Home() {
                         minute: "2-digit",
                       });
                       return (
-                        <div key={entry.id} className="border rounded-md p-3 text-sm">
+                        <div key={entry.id} className="border border-sage-100 rounded-md p-3 text-sm">
                           <div
                             className="flex justify-between items-center cursor-pointer gap-2"
                             onClick={() => toggleExpanded(entry.id)}
                           >
                             <span className="truncate">
                               <strong>{entry.format}</strong> · {entry.role}{" "}
-                              <span className="text-gray-400 text-xs">{dateStr}</span>
+                              <span className="text-sage-300 text-xs">{dateStr}</span>
                             </span>
-                            <span className="text-gray-400 shrink-0">{expanded ? "▴" : "▾"}</span>
+                            <span className="text-sage-300 shrink-0">{expanded ? "▴" : "▾"}</span>
                           </div>
                           {expanded && (
-                            <div className="mt-2 pt-2 border-t">
+                            <div className="mt-2 pt-2 border-t border-sage-100">
                               <pre className="whitespace-pre-wrap text-xs">{entry.text}</pre>
                               <div className="flex gap-2 mt-2">
                                 <button
                                   type="button"
                                   onClick={() => handleCopyLibraryEntry(entry.text)}
-                                  className="rounded-md border border-emerald-700 text-emerald-700 px-3 py-1 text-xs font-medium"
+                                  className="rounded-md border border-sage-700 text-sage-700 px-3 py-1 text-xs font-medium hover:bg-sage-50"
                                 >
                                   Copier
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteLibraryEntry(entry.id)}
-                                  className="rounded-md border border-red-600 text-red-600 px-3 py-1 text-xs font-medium"
+                                  className="rounded-md border border-red-600 text-red-600 px-3 py-1 text-xs font-medium hover:bg-red-50"
                                 >
                                   Supprimer
                                 </button>
@@ -622,7 +635,7 @@ export default function Home() {
           </div>
         )}
 
-        <footer className="mt-10 pt-4 border-t text-xs text-gray-400 flex gap-3 justify-center">
+        <footer className="mt-10 pt-4 border-t border-sage-100 text-xs text-sage-300 flex gap-3 justify-center">
           <a href="/mentions-legales" className="hover:underline">Mentions légales</a>
           <a href="/confidentialite" className="hover:underline">Confidentialité</a>
           <a href="/cgv" className="hover:underline">CGV</a>

@@ -34,13 +34,13 @@ export default function AccesPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-8">
+    <main className="min-h-screen flex items-center justify-center p-8 bg-cream">
       <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
-        <h1 className="text-xl font-semibold">Accès au générateur</h1>
-        <p className="text-sm text-gray-500">Entre le code d&apos;accès reçu à l&apos;achat.</p>
+        <h1 className="font-serif text-2xl font-semibold text-sage-800">Accès au générateur</h1>
+        <p className="text-sm text-sage-300">Entre le code d&apos;accès reçu à l&apos;achat.</p>
         <input
           type="text"
-          className="w-full border rounded-md p-2 text-sm"
+          className="w-full border border-sage-100 rounded-md p-2 text-sm bg-white focus:outline-none focus:border-sage-700"
           placeholder="Code d'accès"
           value={code}
           onChange={(e) => setCode(e.target.value)}
@@ -49,7 +49,7 @@ export default function AccesPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-emerald-700 text-white font-semibold py-3 disabled:bg-gray-400"
+          className="w-full rounded-md bg-sage-700 text-cream font-semibold py-3 disabled:bg-sage-300 hover:bg-sage-800 transition-colors"
         >
           {loading ? "Vérification…" : "Valider"}
         </button>

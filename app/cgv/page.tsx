@@ -1,8 +1,8 @@
 export default function CGV() {
   return (
-    <main className="min-h-screen p-8 flex justify-center">
+    <main className="min-h-screen p-8 flex justify-center bg-cream">
       <div className="w-full max-w-2xl space-y-4 text-sm leading-relaxed">
-        <h1 className="text-2xl font-semibold mb-4">Conditions générales de vente</h1>
+        <h1 className="font-serif text-2xl font-semibold text-sage-800 mb-4">Conditions générales de vente</h1>
 
         <p className="bg-amber-50 border border-amber-200 rounded-md p-3 text-amber-800">
           ⚠️ Modèle générique à faire relire et compléter par un professionnel du droit avant
