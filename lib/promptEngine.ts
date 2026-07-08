@@ -175,6 +175,15 @@ export const storyTunnels: Record<Objectif, string> = {
   CONVERSION: `TUNNEL B — Objection → Preuve → CTA (5 frames, seul moment où le CTA prime sur le lien) : Frame 1 NOMMER L'OBJECTION (pas de sticker). Frame 2 RECADRAGE + STICKER sondage — depuis le vécu, pas un argumentaire théorique. Frame 3 PREUVE (pas de sticker, jamais de chiffre inventé) — à la taille de l'état réel. Frame 4 PERMISSION (boîte à questions). Frame 5 CTA — mot-clé tapé DIRECTEMENT en DM (ex. "Écris DIAGNOSTIC en DM") ou sticker lien direct (1 tap) si le contexte le permet : une story n'a PAS de commentaires, ne propose jamais "commente X". C'est la SEULE frame de toute séquence story où "clique"/l'action prime sur "réponds-moi".`,
 };
 
+// Rôle exact de la frame 1 (l'amorce, générée à l'étape 1 avant que le tunnel complet
+// ne soit connu) selon l'objectif — dérivé des libellés "Frame 1 ..." de storyTunnels
+// ci-dessus ; à garder cohérent si ces libellés évoluent.
+export const storyFrame1Role: Record<Objectif, string> = {
+  ATTRACTION: `IDENTIFICATION : un miroir précis, une vérité courte sur elle — pas encore une scène développée ni une objection, juste un constat qui la touche directement.`,
+  CONNEXION: `SCÈNE DE VIE RÉELLE : un moment précis et sans filtre, comme le tout début d'une anecdote qu'on va raconter — pas un constat ni une objection.`,
+  CONVERSION: `NOMMER L'OBJECTION : le doute ou l'objection réelle que la cible a en tête à cet instant précis, formulé comme elle le penserait elle-même — ne le résous surtout pas ici, le recadrage viendra seulement à la frame suivante.`,
+};
+
 export interface GenContext {
   offreType: string;
   offre: string;
@@ -233,6 +242,8 @@ CE QUI SONNE FAUX (à éviter absolument, ça sonne comme un hook déguisé) :
 - "Je le vois trop souvent pour l'ignorer" / "je le remarque partout" / "je vois trop de gens tomber dans ce piège" / "j'aurais dû le dire plus tôt" (affirmation d'autorité en ouverture, sonne comme un constat d'experte préparé, pas une pensée qui vient de te traverser l'esprit là maintenant)
 
 LE VRAI TEST, APPLICABLE À N'IMPORTE QUEL OBJECTIF ET N'IMPORTE QUEL ANGLE (attraction, connexion, conversion — pas un cas particulier) : une amorce ne doit JAMAIS teaser une révélation à venir. Un hook dit "il y a une chose que je vais te dire" (ça crée un gap de curiosité, c'est un mécanisme marketing) — une amorce EST déjà la pensée ou la scène, directement, sans l'annoncer d'abord. Avant de valider ta 1re frame, vérifie : est-ce que ma phrase promet quelque chose qui va suivre au lieu de le dire tout de suite ("il y a un truc que...", "j'ai mis du temps à comprendre...", "je vois trop de...") ? Si oui, quel que soit l'angle donné, c'est un hook déguisé — recommence directement dans la scène ou la pensée elle-même.
+
+RÔLE PRÉCIS DE CETTE AMORCE, NON NÉGOCIABLE : cette amorce sera figée comme frame 1 d'une séquence story complète que tu ne vois pas encore à cette étape — son rôle exact dépend de l'objectif ${ctx.objectif} donné plus bas : ${storyFrame1Role[ctx.objectif]} Respecte ce rôle en plus des principes généraux ci-dessus, sinon la suite de la séquence (générée ensuite autour de cette amorce fixée) ne pourra pas s'enchaîner logiquement dessus.
 
 ${SHARED_RULES}${voiceInstructionHooks}
 
