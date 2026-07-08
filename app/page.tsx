@@ -10,10 +10,27 @@ import type {
   SujetMode,
 } from "@/lib/promptEngine";
 
+interface CtaInfo {
+  cta: string;
+  pourquoi: string;
+}
+
 interface FormOptions {
   roles: Record<Objectif, RoleOption[]>;
   offreTypes: string[];
+  ctaInfo: Record<Objectif, CtaInfo>;
+  ctaInfoStory: Record<Objectif, CtaInfo>;
 }
+
+interface LibraryEntry {
+  id: number;
+  date: string;
+  format: string;
+  role: string;
+  text: string;
+}
+
+const LIBRARY_STORAGE_KEY = "gabarit-library";
 
 const OBJECTIFS: { value: Objectif; label: string }[] = [
   { value: "ATTRACTION", label: "Attraction — s'arrêter" },
@@ -53,6 +70,11 @@ export default function Home() {
   const [truncated, setTruncated] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  const [library, setLibrary] = useState<LibraryEntry[]>([]);
+  const [libraryOpen, setLibraryOpen] = useState(false);
+  const [expandedIds, setExpandedIds] = useState<Set<number>>(new Set());
+  const [saveConfirm, setSaveConfirm] = useState("");
+
   useEffect(() => {
     fetch("/api/form-options")
       .then((res) => res.json())
@@ -61,6 +83,12 @@ export default function Home() {
         setOffreType(data.offreTypes[0] ?? "");
         setRoleId(data.roles.ATTRACTION[0]?.id ?? "");
       });
+    try {
+      const raw = localStorage.getItem(LIBRARY_STORAGE_KEY);
+      if (raw) setLibrary(JSON.parse(raw));
+    } catch {
+      // pas de bibliothèque valide en local, on repart d'une liste vide
+    }
   }, []);
 
   useEffect(() => {
@@ -158,6 +186,54 @@ export default function Home() {
     } catch {
       // ignore : le texte reste affichable et copiable manuellement
     }
+  }
+
+  function persistLibrary(next: LibraryEntry[]) {
+    setLibrary(next);
+    try {
+      localStorage.setItem(LIBRARY_STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      // stockage local indisponible (navigation privée, quota...) : la session reste utilisable
+    }
+  }
+
+  function showSaveConfirm(msg: string) {
+    setSaveConfirm(msg);
+    setTimeout(() => setSaveConfirm(""), 3500);
+  }
+
+  function handleSaveToLibrary() {
+    const entry: LibraryEntry = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      format,
+      role: selectedRole ? `${selectedRole.id} — ${selectedRole.nom}` : "?",
+      text: fullText,
+    };
+    persistLibrary([...library, entry]);
+    showSaveConfirm("Enregistré dans ta bibliothèque ✓");
+  }
+
+  async function handleCopyLibraryEntry(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      showSaveConfirm("Copié ✓");
+    } catch {
+      showSaveConfirm("Copie impossible ici — sélectionne le texte manuellement.");
+    }
+  }
+
+  function handleDeleteLibraryEntry(id: number) {
+    persistLibrary(library.filter((entry) => entry.id !== id));
+  }
+
+  function toggleExpanded(id: number) {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   }
 
   function handleRestart() {
@@ -415,7 +491,60 @@ export default function Home() {
                   >
                     {copied ? "Copié ✓" : "📋 Copier"}
                   </button>
+                  <button
+                    type="button"
+                    onClick={handleSaveToLibrary}
+                    className="flex-1 rounded-md border border-emerald-700 text-emerald-700 py-2 text-sm font-medium"
+                  >
+                    💾 Enregistrer
+                  </button>
                 </div>
+                {saveConfirm && (
+                  <p className="text-xs text-emerald-700 mt-1">{saveConfirm}</p>
+                )}
+
+                {selectedRole && formOptions && (() => {
+                  const ctaInfo = (isStory ? formOptions.ctaInfoStory : formOptions.ctaInfo)[objectif];
+                  return (
+                    <div className="bg-emerald-700 text-white rounded-md p-4 mt-3 text-sm space-y-2">
+                      <p className="font-serif font-semibold">
+                        Pourquoi ce post a été construit comme ça
+                      </p>
+                      <div className="flex gap-2">
+                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
+                          {isStory ? "Amorce" : "Hook"}
+                        </span>
+                        <span>
+                          {selectedRole.id} — {selectedRole.nom}
+                        </span>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
+                          Biais psychologique
+                        </span>
+                        <span>{selectedRole.biais}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
+                          Émotion visée
+                        </span>
+                        <span>{selectedRole.emotion}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
+                          CTA choisi
+                        </span>
+                        <span>{ctaInfo.cta}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
+                          Pourquoi
+                        </span>
+                        <span>{ctaInfo.pourquoi}</span>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             )}
 
@@ -426,6 +555,70 @@ export default function Home() {
             >
               Modifier le contexte
             </button>
+
+            <div>
+              <button
+                type="button"
+                onClick={() => setLibraryOpen((v) => !v)}
+                className="text-sm font-semibold text-emerald-700"
+              >
+                📚 Mes contenus sauvegardés ({library.length})
+              </button>
+              {libraryOpen && (
+                <div className="mt-2 space-y-2 max-h-80 overflow-y-auto">
+                  {library.length === 0 && (
+                    <p className="text-xs text-gray-500">Rien d&apos;enregistré pour l&apos;instant.</p>
+                  )}
+                  {library
+                    .slice()
+                    .reverse()
+                    .map((entry) => {
+                      const expanded = expandedIds.has(entry.id);
+                      const dateStr = new Date(entry.date).toLocaleString("fr-FR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      });
+                      return (
+                        <div key={entry.id} className="border rounded-md p-3 text-sm">
+                          <div
+                            className="flex justify-between items-center cursor-pointer gap-2"
+                            onClick={() => toggleExpanded(entry.id)}
+                          >
+                            <span className="truncate">
+                              <strong>{entry.format}</strong> · {entry.role}{" "}
+                              <span className="text-gray-400 text-xs">{dateStr}</span>
+                            </span>
+                            <span className="text-gray-400 shrink-0">{expanded ? "▴" : "▾"}</span>
+                          </div>
+                          {expanded && (
+                            <div className="mt-2 pt-2 border-t">
+                              <pre className="whitespace-pre-wrap text-xs">{entry.text}</pre>
+                              <div className="flex gap-2 mt-2">
+                                <button
+                                  type="button"
+                                  onClick={() => handleCopyLibraryEntry(entry.text)}
+                                  className="rounded-md border border-emerald-700 text-emerald-700 px-3 py-1 text-xs font-medium"
+                                >
+                                  Copier
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteLibraryEntry(entry.id)}
+                                  className="rounded-md border border-red-600 text-red-600 px-3 py-1 text-xs font-medium"
+                                >
+                                  Supprimer
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

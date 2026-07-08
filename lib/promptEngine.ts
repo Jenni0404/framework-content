@@ -128,12 +128,14 @@ L'angle de crédibilité s'adapte au type d'offre fourni — une coach ne "prouv
 
 export const NEEDS_PROOF = ["CV1", "CV4", "CV9"];
 
-// Vue publique et minimale d'un rôle, sûre à exposer au client (jamais SHARED_RULES/CTA_INFO/storyTunnels).
+// Vue publique et minimale d'un rôle, sûre à exposer au client (jamais SHARED_RULES/storyTunnels/fonctions de prompt).
 export interface RoleOption {
   id: string;
   nom: string;
   description: string;
   registre: string;
+  biais: string;
+  emotion: string;
   needsProof: boolean;
 }
 
@@ -142,11 +144,13 @@ export function getRoleOptionsMap(): Record<Objectif, RoleOption[]> {
   return Object.fromEntries(
     objectifs.map((objectif) => [
       objectif,
-      ROLES[objectif].map(([id, nom, description, registre]) => ({
+      ROLES[objectif].map(([id, nom, description, registre, biais, emotion]) => ({
         id,
         nom,
         description,
         registre,
+        biais,
+        emotion,
         needsProof: NEEDS_PROOF.includes(id),
       })),
     ])
