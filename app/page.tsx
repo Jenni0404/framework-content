@@ -37,14 +37,21 @@ const OBJECTIF_RATIO_STYLE: Record<Objectif, string> = {
   CONVERSION: "bg-sage-300 text-cream",
 };
 
-// Volontairement générique — ne nomme jamais le rôle, le biais ou l'émotion exacts (taxonomie propriétaire).
-const WHY_MESSAGE: Record<Objectif, string> = {
+// Ce que la lectrice retire concrètement de chaque objectif — jamais le biais/l'émotion
+// exacts de la taxonomie, juste le bénéfice pour elle, en langage courant.
+const READER_BENEFIT: Record<Objectif, string> = {
   ATTRACTION:
-    "Ce post est pensé pour arrêter le scroll d'une personne qui ne te connaît pas encore — l'objectif n'est jamais de vendre ici, juste de te faire remarquer.",
+    "quelque chose qui l'arrête net dans son scroll et lui donne une raison de te remarquer, sans qu'elle te connaisse encore",
   CONNEXION:
-    "Ce post est pensé pour créer du lien et de la confiance avec ta communauté — pas pour vendre, pour donner envie de te répondre.",
+    "un moment où elle se sent vraiment comprise, et où la confiance avec toi se construit",
   CONVERSION:
-    "Ce post est pensé pour transformer l'intérêt déjà là en décision d'achat — le moment où on peut enfin parler clairement de l'offre.",
+    "de quoi voir clairement si ton offre est faite pour elle, et l'aider à se décider",
+};
+
+const OBJECTIF_LABEL: Record<Objectif, string> = {
+  ATTRACTION: "Attraction",
+  CONNEXION: "Connexion",
+  CONVERSION: "Conversion",
 };
 
 const FORMATS: { value: Format; label: string }[] = [
@@ -520,9 +527,11 @@ export default function Home() {
                 )}
 
                 <div className="bg-sage-700 text-cream rounded-md p-4 mt-3 text-sm space-y-1">
-                  <p className="font-serif font-semibold text-base">Pourquoi ce format</p>
+                  <p className="font-serif font-semibold text-base">Pourquoi ce post</p>
                   <p>
-                    {WHY_MESSAGE[objectif]}
+                    {selectedRole ? `Cet angle : ${selectedRole.description} ` : ""}
+                    Combiné à l&apos;objectif {OBJECTIF_LABEL[objectif]}, ça donne à ta lectrice{" "}
+                    {READER_BENEFIT[objectif]}.
                     {isStory ? " Ici, en story : tu t'adresses à des abonnées qui te suivent déjà, pas à des inconnues." : ""}
                   </p>
                 </div>
