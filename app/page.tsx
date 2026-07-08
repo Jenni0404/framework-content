@@ -10,16 +10,9 @@ import type {
   SujetMode,
 } from "@/lib/promptEngine";
 
-interface CtaInfo {
-  cta: string;
-  pourquoi: string;
-}
-
 interface FormOptions {
   roles: Record<Objectif, RoleOption[]>;
   offreTypes: string[];
-  ctaInfo: Record<Objectif, CtaInfo>;
-  ctaInfoStory: Record<Objectif, CtaInfo>;
 }
 
 interface LibraryEntry {
@@ -42,6 +35,16 @@ const OBJECTIF_RATIO_STYLE: Record<Objectif, string> = {
   ATTRACTION: "bg-sage-100 text-ink",
   CONNEXION: "bg-sage-700 text-cream",
   CONVERSION: "bg-sage-300 text-cream",
+};
+
+// Volontairement générique — ne nomme jamais le rôle, le biais ou l'émotion exacts (taxonomie propriétaire).
+const WHY_MESSAGE: Record<Objectif, string> = {
+  ATTRACTION:
+    "Ce post est pensé pour arrêter le scroll d'une personne qui ne te connaît pas encore — l'objectif n'est jamais de vendre ici, juste de te faire remarquer.",
+  CONNEXION:
+    "Ce post est pensé pour créer du lien et de la confiance avec ta communauté — pas pour vendre, pour donner envie de te répondre.",
+  CONVERSION:
+    "Ce post est pensé pour transformer l'intérêt déjà là en décision d'achat — le moment où on peut enfin parler clairement de l'offre.",
 };
 
 const FORMATS: { value: Format; label: string }[] = [
@@ -516,48 +519,13 @@ export default function Home() {
                   <p className="text-xs text-sage-700 mt-1">{saveConfirm}</p>
                 )}
 
-                {selectedRole && formOptions && (() => {
-                  const ctaInfo = (isStory ? formOptions.ctaInfoStory : formOptions.ctaInfo)[objectif];
-                  return (
-                    <div className="bg-sage-700 text-cream rounded-md p-4 mt-3 text-sm space-y-2">
-                      <p className="font-serif font-semibold text-base">
-                        Pourquoi ce post a été construit comme ça
-                      </p>
-                      <div className="flex gap-2">
-                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
-                          {isStory ? "Amorce" : "Hook"}
-                        </span>
-                        <span>
-                          {selectedRole.id} — {selectedRole.nom}
-                        </span>
-                      </div>
-                      <div className="flex gap-2">
-                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
-                          Biais psychologique
-                        </span>
-                        <span>{selectedRole.biais}</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
-                          Émotion visée
-                        </span>
-                        <span>{selectedRole.emotion}</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
-                          CTA choisi
-                        </span>
-                        <span>{ctaInfo.cta}</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <span className="font-semibold min-w-[110px] shrink-0 opacity-85">
-                          Pourquoi
-                        </span>
-                        <span>{ctaInfo.pourquoi}</span>
-                      </div>
-                    </div>
-                  );
-                })()}
+                <div className="bg-sage-700 text-cream rounded-md p-4 mt-3 text-sm space-y-1">
+                  <p className="font-serif font-semibold text-base">Pourquoi ce format</p>
+                  <p>
+                    {WHY_MESSAGE[objectif]}
+                    {isStory ? " Ici, en story : tu t'adresses à des abonnées qui te suivent déjà, pas à des inconnues." : ""}
+                  </p>
+                </div>
               </div>
             )}
 

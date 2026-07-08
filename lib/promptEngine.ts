@@ -130,13 +130,12 @@ L'angle de crédibilité s'adapte au type d'offre fourni — une coach ne "prouv
 export const NEEDS_PROOF = ["CV1", "CV4", "CV9"];
 
 // Vue publique et minimale d'un rôle, sûre à exposer au client (jamais SHARED_RULES/storyTunnels/fonctions de prompt).
+// Volontairement sans biais/emotion : ce sont des éléments de la taxonomie propriétaire, jamais exposés au client.
 export interface RoleOption {
   id: string;
   nom: string;
   description: string;
   registre: string;
-  biais: string;
-  emotion: string;
   needsProof: boolean;
 }
 
@@ -145,13 +144,11 @@ export function getRoleOptionsMap(): Record<Objectif, RoleOption[]> {
   return Object.fromEntries(
     objectifs.map((objectif) => [
       objectif,
-      ROLES[objectif].map(([id, nom, description, registre, biais, emotion]) => ({
+      ROLES[objectif].map(([id, nom, description, registre]) => ({
         id,
         nom,
         description,
         registre,
-        biais,
-        emotion,
         needsProof: NEEDS_PROOF.includes(id),
       })),
     ])
@@ -368,7 +365,9 @@ PONT STORY → DM, ÉLÉMENT OBLIGATOIRE ET DISTINCT (à écrire après les fram
 
   const carrouselInstruction =
     ctx.format === "Carrousel"
-      ? `\n\nSTRUCTURE CARROUSEL (8-10 slides, sauf structure spécifique fournie plus bas) : Slide 1 = hook fourni tel quel → Slide 2 = Rétention, ET DOIT CONTENIR SON PROPRE HOOK (l'algorithme peut réafficher le carrousel en commençant directement à cette slide — elle doit donc tenir seule, pas seulement enchaîner sur la slide 1) → Valeur (1 idée/slide, un titre court de 5-7 mots + 2-3 phrases) → Récap (ne te contente jamais de reformuler ce qui précède : ajoute un bonus ou un angle non mentionné avant) → CTA (mot-clé + bénéfice). Puis une LÉGENDE complète et OBLIGATOIRE (jamais omise) : ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, 3-5 hashtags ciblés.`
+      ? `\n\nSTRUCTURE CARROUSEL (8-10 slides, sauf structure spécifique fournie plus bas) : Slide 1 = hook fourni tel quel → Slide 2 = Rétention, ET DOIT CONTENIR SON PROPRE HOOK (l'algorithme peut réafficher le carrousel en commençant directement à cette slide — elle doit donc tenir seule, pas seulement enchaîner sur la slide 1) → Valeur (1 idée/slide, un titre court de 5-7 mots + 2-3 phrases) → Récap (ne te contente jamais de reformuler ce qui précède : ajoute un bonus ou un angle non mentionné avant) → CTA (mot-clé + bénéfice). Puis une LÉGENDE complète et OBLIGATOIRE (jamais omise) : ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, 3-5 hashtags ciblés.
+
+RÈGLE CRITIQUE SUR CETTE LÉGENDE — JAMAIS UN RÉSUMÉ DES SLIDES : les slides ont déjà fait tout le travail de démonstration (l'argument, la métaphore, la méthode) — la légende ne le refait JAMAIS avec d'autres mots, même reformulé différemment. Elle apporte une couche DIFFÉRENTE et complémentaire : une anecdote personnelle liée au sujet, un détail des coulisses, la voix intérieure au moment des faits, ou un angle adjacent que les slides n'ont pas traité. Avant de l'écrire, vérifie : est-ce que je suis en train de redire ce que les slides ont déjà dit, même avec d'autres mots ou une autre métaphore ? Si oui, change complètement d'angle.`
       : "";
 
   const system = `Tu remplis le CORPS COMPLET d'un gabarit de contenu Instagram — ${
