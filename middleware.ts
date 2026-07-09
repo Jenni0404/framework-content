@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const PUBLIC_PATHS = ["/acces", "/api/access", "/mentions-legales", "/confidentialite", "/cgv"];
+const PUBLIC_PATHS = ["/acces", "/api/access", "/mentions-legales", "/confidentialite", "/cgv", "/offre", "/merci"];
 
 function getValidCodes(): string[] {
   return (process.env.ACCESS_CODES ?? "")
