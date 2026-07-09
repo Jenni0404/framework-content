@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // Valeurs de travail, faciles à changer en un seul endroit :
-const SYSTEME_NOM = "La Doctrine"; // en attente de confirmation finale
+const SYSTEME_NOM = "Le Système"; // en attente de confirmation finale du nom exact
 const PRIX_FONDATRICE = "67€";
 const GENERATIONS_INCLUSES = 150;
 const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/REMPLACER_PAR_LE_VRAI_LIEN";
@@ -41,7 +41,7 @@ export default function Offre() {
           <h2 className="font-serif text-xl font-semibold">{SYSTEME_NOM}</h2>
           <p className="text-sm leading-relaxed opacity-95">
             Framework Content ne génère pas un texte au hasard — il applique {SYSTEME_NOM},
-            une doctrine éditoriale construite après des mois d&apos;analyse : des dizaines
+            un système éditorial construit après des mois d&apos;analyse : des dizaines
             d&apos;angles éditoriaux, chacun pensé pour un objectif précis (arrêter le scroll,
             créer la confiance, ou préparer une décision), avec des garde-fous qui refusent
             d&apos;inventer un chiffre, une source ou un témoignage. Chaque format (carrousel,
