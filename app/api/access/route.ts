@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 
+function getValidCodes(): string[] {
+  return (process.env.ACCESS_CODES ?? "")
+    .split(",")
+    .map((c) => c.trim())
+    .filter(Boolean);
+}
+
 export async function POST(req: Request) {
-  const accessCode = process.env.ACCESS_CODE;
-  if (!accessCode) {
+  const validCodes = getValidCodes();
+  if (validCodes.length === 0) {
     return NextResponse.json({ ok: true });
   }
 
@@ -13,12 +20,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Requête invalide." }, { status: 400 });
   }
 
-  if (!body.code || body.code !== accessCode) {
+  if (!body.code || !validCodes.includes(body.code)) {
     return NextResponse.json({ ok: false, error: "Code incorrect." }, { status: 401 });
   }
 
   const res = NextResponse.json({ ok: true });
-  res.cookies.set("fc_access", accessCode, {
+  res.cookies.set("fc_access", body.code, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",

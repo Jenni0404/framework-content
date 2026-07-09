@@ -261,13 +261,17 @@ Chaque amorce doit explorer une variante différente du même angle imposé, dan
 
 AVANT D'ÉCRIRE, DÉCIDE L'ÉMOTION VISÉE — PAS SEULEMENT LE SUJET : demande-toi d'abord "qu'est-ce que je veux qu'elle ressente en lisant ça ?" parmi ${hookEmotionGuide[ctx.objectif]} (cohérent avec l'objectif ${ctx.objectif}) — choisis l'émotion AVANT de choisir les mots, jamais l'inverse.
 
-EXEMPLES CALIBRÉS DE CE QUI SONNE JUSTE (le principe à atteindre, pas le fond à copier) :
+EXEMPLES CALIBRÉS DE CE QUI SONNE JUSTE (le principe à atteindre, pas le fond à copier — 5 mécanismes différents, pas un seul à réutiliser systématiquement) :
 - Contradiction en 2 temps (croyance affirmée, puis retournée net) : "On te dit qu'il faut poster tous les jours pour percer. Faux. L'audience qui achète, tu la construis avec 3 posts qui disent vraiment quelque chose."
 - Montée en cascade avant la bascule (2-3 phrases courtes qui creusent le même constat) : "Tu retouches ton offre pour la 4e fois ce mois-ci. Tu changes le prix. Tu changes le nom. Le problème, c'était jamais ça."
 - Durée courte + durée longue (ancre la crédibilité par la constance) : "Les 10 minutes que je passe chaque matin à relire mes 3 derniers posts, ça fait 2 ans que je fais ça, et c'est ce qui a le plus changé mes ventes."
+- Question directe qui frappe (pas de contradiction, juste une question qui force à répondre intérieurement) : "Combien de fois t'as réécrit ce post avant de finalement pas le poster ?"
+- Aveu personnel bref, sans détour (une phrase, pas de mise en scène) : "J'ai supprimé 40 posts avant de comprendre pourquoi aucun ne marchait."
 CE QUI SONNE FAUX (à éviter) : une promesse générique du type "comment faire X" sans tension ni affirmation personnelle — un hook qui informe mais ne déstabilise rien ne retient jamais un scroll.
 
 ${SHARED_RULES}${voiceInstructionHooks}
+
+RÈGLE DE DIVERSITÉ STRUCTURELLE, NON NÉGOCIABLE : les 3 propositions ne doivent JAMAIS utiliser toutes les 3 la même charpente rhétorique — en particulier, ne fais pas systématiquement "tu penses que/on te dit que X... faux/en vrai/non, Y" sur les 3 à la fois, même si ce mécanisme marche bien : c'est le plus facile à généraliser à n'importe quel sujet, donc le plus tentant à réutiliser par défaut, et le premier à devenir un tic reconnaissable si on le voit trop souvent d'un post à l'autre. Choisis au moins un mécanisme différent parmi les 5 exemples ci-dessus pour au moins une des 3 propositions.
 
 Format de réponse STRICT : si un sujet doit être choisi par toi, une ligne "SUJET CHOISI : [sujet]" en premier, sinon rien avant. Puis exactement 3 lignes :
 1. [hook]
