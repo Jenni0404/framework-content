@@ -36,7 +36,7 @@ export default function AccesPage() {
   return (
     <main className="min-h-screen flex items-center justify-center p-8 bg-cream">
       <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
-        <h1 className="font-serif text-2xl font-semibold text-sage-800">Accès au générateur</h1>
+        <h1 className="font-serif text-2xl font-semibold text-sage-800">Accès à Framework Content</h1>
         <p className="text-sm text-sage-300">Entre le code d&apos;accès reçu à l&apos;achat.</p>
         <input
           type="text"

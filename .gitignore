@@ -30,3 +30,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# skill Claude Code locale, pas liée au produit
+.claude/skills/

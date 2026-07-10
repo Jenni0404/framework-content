@@ -26,9 +26,9 @@ interface LibraryEntry {
 const LIBRARY_STORAGE_KEY = "gabarit-library";
 
 const OBJECTIFS: { value: Objectif; label: string; ratio: string }[] = [
-  { value: "ATTRACTION", label: "Attraction — s'arrêter", ratio: "40%" },
-  { value: "CONNEXION", label: "Connexion — confiance", ratio: "30%" },
-  { value: "CONVERSION", label: "Conversion — décision", ratio: "30%" },
+  { value: "ATTRACTION", label: "Attraction : s'arrêter", ratio: "40%" },
+  { value: "CONNEXION", label: "Connexion : confiance", ratio: "30%" },
+  { value: "CONVERSION", label: "Conversion : décision", ratio: "30%" },
 ];
 
 const OBJECTIF_RATIO_STYLE: Record<Objectif, string> = {
@@ -230,7 +230,7 @@ export default function Home() {
       id: Date.now(),
       date: new Date().toISOString(),
       format,
-      role: selectedRole ? `${selectedRole.id} — ${selectedRole.nom}` : "?",
+      role: selectedRole ? `${selectedRole.id} · ${selectedRole.nom}` : "?",
       text: fullText,
     };
     persistLibrary([...library, entry]);
@@ -242,7 +242,7 @@ export default function Home() {
       await navigator.clipboard.writeText(text);
       showSaveConfirm("Copié ✓");
     } catch {
-      showSaveConfirm("Copie impossible ici — sélectionne le texte manuellement.");
+      showSaveConfirm("Copie impossible ici, sélectionne le texte manuellement.");
     }
   }
 
@@ -272,7 +272,7 @@ export default function Home() {
   return (
     <main className="min-h-screen p-8 flex justify-center bg-cream">
       <div className="w-full max-w-2xl">
-        <h1 className="font-serif text-3xl font-semibold text-sage-800 mb-1">Générateur de gabarit</h1>
+        <h1 className="font-serif text-3xl font-semibold text-sage-800 mb-1">Framework Content</h1>
         <p className="text-sm text-sage-300 mb-6">
           Étape 1 : choisis ton contexte et ton angle. Étape 2 : choisis ton{" "}
           {elementLabel} parmi 3, puis récupère le post complet.
@@ -377,7 +377,7 @@ export default function Home() {
               >
                 {(formOptions?.roles[objectif] ?? []).map((r) => (
                   <option key={r.id} value={r.id}>
-                    {r.id} — {r.nom}
+                    {r.id} · {r.nom}
                   </option>
                 ))}
               </select>
@@ -504,7 +504,7 @@ export default function Home() {
               <div>
                 {truncated && (
                   <p className="text-sm text-amber-600 mb-2">
-                    ⚠️ Le texte a peut-être été coupé malgré la relance automatique — régénère si besoin.
+                    ⚠️ Le texte a peut-être été coupé malgré la relance automatique. Régénère si besoin.
                   </p>
                 )}
                 <pre className="whitespace-pre-wrap border border-sage-100 rounded-md p-4 text-sm bg-sage-50 text-ink">

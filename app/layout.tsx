@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Mulish } from "next/font/google";
+import { Playfair_Display, Mulish } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["600", "700"],
   variable: "--font-serif",
 });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${cormorant.variable} ${mulish.variable}`}>
+    <html lang="fr" className={`${playfair.variable} ${mulish.variable}`}>
       <body>{children}</body>
     </html>
   );
