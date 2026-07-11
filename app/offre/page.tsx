@@ -87,19 +87,19 @@ const CE_QUE_CE_NEST_PAS = [
 
 const DOULEURS_BENEFICES = [
   {
-    douleur: "Tu ne sais jamais quoi publier.",
+    douleur: "Ne jamais savoir quoi publier.",
     benefice: "49 angles à choisir, un sujet proposé si tu n'en as pas.",
   },
   {
-    douleur: "Tu publies dans le vide.",
+    douleur: "Se sentir invisible malgré les efforts.",
     benefice: "Chaque post suit un mécanisme pensé pour arrêter le scroll.",
   },
   {
-    douleur: "À fond une semaine, plus rien les deux suivantes.",
+    douleur: "Les cycles de motivation et d'abandon.",
     benefice: "Un post généré en quelques minutes, pas une contrainte de plus.",
   },
   {
-    douleur: "Le contenu, toujours la dernière priorité.",
+    douleur: "L'irrégularité chronique.",
     benefice: "Tu choisis, tu publies, c'est tout.",
   },
 ];
