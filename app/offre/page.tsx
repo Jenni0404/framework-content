@@ -212,7 +212,7 @@ export default function Offre() {
             générique.
           </h1>
           <p className="text-base text-ink/90">
-            Un carrousel, un reel ou une story qui te ressemble vraiment — idée en tête ou
+            Un carrousel, un reel ou une story qui te ressemble vraiment, idée en tête ou
             pas, grâce à un système éditorial propulsé par l&apos;IA.
           </p>
           <p className="bg-sage-700 text-cream text-center text-xs font-semibold uppercase tracking-wide rounded-md py-2 px-3">
@@ -254,7 +254,7 @@ export default function Offre() {
           <p className="text-sm text-ink/90 leading-relaxed">
             La plupart des outils d&apos;IA génèrent un texte à partir de rien de précis :
             ça sort plat, générique, interchangeable. Ce qui manque, ce n&apos;est pas de la
-            motivation ni des idées — c&apos;est un système qui sait déjà quel angle utiliser,
+            motivation ni des idées. C&apos;est un système qui sait déjà quel angle utiliser,
             quelle structure suivre selon le format, et comment ne jamais inventer une
             preuve pour paraître crédible.
           </p>
@@ -327,7 +327,7 @@ export default function Offre() {
             <ul className="space-y-1">
               {CE_QUE_CE_NEST_PAS.map((item) => (
                 <li key={item} className="text-sm text-ink/70 leading-relaxed">
-                  — {item}
+                  × {item}
                 </li>
               ))}
             </ul>
