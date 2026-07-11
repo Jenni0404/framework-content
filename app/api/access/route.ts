@@ -1,18 +1,7 @@
 import { NextResponse } from "next/server";
-
-function getValidCodes(): string[] {
-  return (process.env.ACCESS_CODES ?? "")
-    .split(",")
-    .map((c) => c.trim())
-    .filter(Boolean);
-}
+import { sql } from "@/lib/db";
 
 export async function POST(req: Request) {
-  const validCodes = getValidCodes();
-  if (validCodes.length === 0) {
-    return NextResponse.json({ ok: true });
-  }
-
   let body: { code?: string };
   try {
     body = await req.json();
@@ -20,7 +9,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Requête invalide." }, { status: 400 });
   }
 
-  if (!body.code || !validCodes.includes(body.code)) {
+  if (!body.code) {
+    return NextResponse.json({ ok: false, error: "Code incorrect." }, { status: 401 });
+  }
+
+  let exists = false;
+  try {
+    const rows = await sql`SELECT id FROM clients WHERE code_acces = ${body.code} LIMIT 1`;
+    exists = rows.length > 0;
+  } catch {
+    return NextResponse.json({ ok: false, error: "Erreur serveur, réessaie." }, { status: 500 });
+  }
+
+  if (!exists) {
     return NextResponse.json({ ok: false, error: "Code incorrect." }, { status: 401 });
   }
 

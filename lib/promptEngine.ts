@@ -91,6 +91,8 @@ export const SHARED_RULES = `RÈGLE DE LANGUE, NON NÉGOCIABLE : français impec
 
 RÈGLE DE DATE : nous sommes en juillet 2026. N'invente jamais une actualité, une fonctionnalité ou un contexte qui contredit cette date.
 
+RÈGLE DE PONCTUATION, NON NÉGOCIABLE : n'utilise jamais le tiret cadratin (—) dans le texte généré, sous aucune forme, ni pour marquer une pause, ni une opposition, ni une liste. C'est une signature reconnaissable de texte généré par IA que la lectrice repère instinctivement. Remplace-le toujours par un point, une virgule, deux-points, ou reformule en deux phrases courtes distinctes.
+
 RÈGLE — JAMAIS DE SOURCE INVENTÉE : ne cite jamais un nom d'étude, d'institut ou d'entreprise ("une étude HubSpot", "selon une enquête de X") avec un chiffre précis si cette source n'a pas été fournie explicitement dans le contexte donné plus bas. C'est une fabrication qui expose la créatrice à citer une fausse source publiquement — bien plus grave qu'un chiffre vague. Si tu veux illustrer un ordre de grandeur sans donnée réelle, formule-le comme une observation qualitative ("la plupart des...", "dans mon expérience...") jamais comme une statistique sourcée.
 
 ⚠️ IMPORTANT : "impeccable" ne veut PAS dire "soutenu" ou "littéraire". Une phrase peut être 100% relâchée, orale, familière, pleine de tournures parlées — et rester grammaticalement parfaite en même temps (bon accord, bonne conjugaison, pas de mot inventé). Ne confonds jamais "corriger les fautes" avec "rendre le texte plus propre/plus poli" — ce sont deux choses différentes. Si un échantillon de voix est fourni plus bas, il prime toujours sur toute tentation de lisser le style.
@@ -123,7 +125,7 @@ AUTRES INTERDITS ABSOLUS :
 GRADIENT DE QUALITÉ (viser toujours le niveau Excellent) :
 🔴 Mauvais : "Aujourd'hui je vous parle de…"
 🟡 Bon : "Pourquoi tes [X] font [problème]"
-🟢 Excellent : "J'ai analysé [N] [cas] — voici le seul point commun"
+🟢 Excellent : "J'ai analysé [N] [cas]. Voici le seul point commun."
 
 L'angle de crédibilité s'adapte au type d'offre fourni — une coach ne "prouve" pas comme une revendeuse MRR ni comme un SaaS.`;
 

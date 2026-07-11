@@ -1,26 +1,28 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { sql } from "@/lib/db";
 
 const PUBLIC_PATHS = ["/acces", "/api/access", "/mentions-legales", "/confidentialite", "/cgv", "/offre", "/merci"];
 
-function getValidCodes(): string[] {
-  return (process.env.ACCESS_CODES ?? "")
-    .split(",")
-    .map((c) => c.trim())
-    .filter(Boolean);
+async function isValidCode(code: string): Promise<boolean> {
+  try {
+    const rows = await sql`SELECT id FROM clients WHERE code_acces = ${code} LIMIT 1`;
+    return rows.length > 0;
+  } catch {
+    // Base injoignable ou mal configurée : on refuse par sécurité, jamais on
+    // n'ouvre l'accès par défaut.
+    return false;
+  }
 }
 
-export function middleware(req: NextRequest) {
-  const validCodes = getValidCodes();
-  if (validCodes.length === 0) return NextResponse.next();
-
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
     return NextResponse.next();
   }
 
   const cookie = req.cookies.get("fc_access")?.value;
-  if (cookie && validCodes.includes(cookie)) return NextResponse.next();
+  if (cookie && (await isValidCode(cookie))) return NextResponse.next();
 
   if (pathname.startsWith("/api/")) {
     return NextResponse.json({ ok: false, error: "Accès non autorisé." }, { status: 401 });

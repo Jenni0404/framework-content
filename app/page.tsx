@@ -17,13 +17,11 @@ interface FormOptions {
 
 interface LibraryEntry {
   id: number;
-  date: string;
+  created_at: string;
   format: string;
   role: string;
-  text: string;
+  texte: string;
 }
-
-const LIBRARY_STORAGE_KEY = "gabarit-library";
 
 const OBJECTIFS: { value: Objectif; label: string; ratio: string }[] = [
   { value: "ATTRACTION", label: "Attraction : s'arrêter", ratio: "40%" },
@@ -106,12 +104,14 @@ export default function Home() {
         setOffreType(data.offreTypes[0] ?? "");
         setRoleId(data.roles.ATTRACTION[0]?.id ?? "");
       });
-    try {
-      const raw = localStorage.getItem(LIBRARY_STORAGE_KEY);
-      if (raw) setLibrary(JSON.parse(raw));
-    } catch {
-      // pas de bibliothèque valide en local, on repart d'une liste vide
-    }
+    fetch("/api/library")
+      .then((res) => res.json())
+      .then((data: { ok: boolean; items?: LibraryEntry[] }) => {
+        if (data.ok && data.items) setLibrary(data.items);
+      })
+      .catch(() => {
+        // bibliothèque indisponible pour l'instant, la session reste utilisable
+      });
   }, []);
 
   useEffect(() => {
@@ -211,30 +211,32 @@ export default function Home() {
     }
   }
 
-  function persistLibrary(next: LibraryEntry[]) {
-    setLibrary(next);
-    try {
-      localStorage.setItem(LIBRARY_STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      // stockage local indisponible (navigation privée, quota...) : la session reste utilisable
-    }
-  }
-
   function showSaveConfirm(msg: string) {
     setSaveConfirm(msg);
     setTimeout(() => setSaveConfirm(""), 3500);
   }
 
-  function handleSaveToLibrary() {
-    const entry: LibraryEntry = {
-      id: Date.now(),
-      date: new Date().toISOString(),
-      format,
-      role: selectedRole ? `${selectedRole.id} · ${selectedRole.nom}` : "?",
-      text: fullText,
-    };
-    persistLibrary([...library, entry]);
-    showSaveConfirm("Enregistré dans ta bibliothèque ✓");
+  async function handleSaveToLibrary() {
+    try {
+      const res = await fetch("/api/library", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          format,
+          role: selectedRole ? `${selectedRole.id} · ${selectedRole.nom}` : "?",
+          texte: fullText,
+        }),
+      });
+      const data = await res.json();
+      if (!data.ok) {
+        showSaveConfirm(data.error || "Erreur lors de l'enregistrement.");
+        return;
+      }
+      setLibrary((prev) => [data.item, ...prev]);
+      showSaveConfirm("Enregistré dans ta bibliothèque ✓");
+    } catch {
+      showSaveConfirm("Erreur réseau, réessaie.");
+    }
   }
 
   async function handleCopyLibraryEntry(text: string) {
@@ -246,8 +248,13 @@ export default function Home() {
     }
   }
 
-  function handleDeleteLibraryEntry(id: number) {
-    persistLibrary(library.filter((entry) => entry.id !== id));
+  async function handleDeleteLibraryEntry(id: number) {
+    setLibrary((prev) => prev.filter((entry) => entry.id !== id));
+    try {
+      await fetch(`/api/library/${id}`, { method: "DELETE" });
+    } catch {
+      // suppression réseau échouée : l'entrée réapparaîtra au prochain chargement
+    }
   }
 
   function toggleExpanded(id: number) {
@@ -545,72 +552,69 @@ export default function Home() {
             >
               Modifier le contexte
             </button>
-
-            <div>
-              <button
-                type="button"
-                onClick={() => setLibraryOpen((v) => !v)}
-                className="text-sm font-semibold text-sage-700"
-              >
-                📚 Mes contenus sauvegardés ({library.length})
-              </button>
-              {libraryOpen && (
-                <div className="mt-2 space-y-2 max-h-80 overflow-y-auto">
-                  {library.length === 0 && (
-                    <p className="text-xs text-sage-300">Rien d&apos;enregistré pour l&apos;instant.</p>
-                  )}
-                  {library
-                    .slice()
-                    .reverse()
-                    .map((entry) => {
-                      const expanded = expandedIds.has(entry.id);
-                      const dateStr = new Date(entry.date).toLocaleString("fr-FR", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      });
-                      return (
-                        <div key={entry.id} className="border border-sage-100 rounded-md p-3 text-sm">
-                          <div
-                            className="flex justify-between items-center cursor-pointer gap-2"
-                            onClick={() => toggleExpanded(entry.id)}
-                          >
-                            <span className="truncate">
-                              <strong>{entry.format}</strong> · {entry.role}{" "}
-                              <span className="text-sage-300 text-xs">{dateStr}</span>
-                            </span>
-                            <span className="text-sage-300 shrink-0">{expanded ? "▴" : "▾"}</span>
-                          </div>
-                          {expanded && (
-                            <div className="mt-2 pt-2 border-t border-sage-100">
-                              <pre className="whitespace-pre-wrap text-xs">{entry.text}</pre>
-                              <div className="flex gap-2 mt-2">
-                                <button
-                                  type="button"
-                                  onClick={() => handleCopyLibraryEntry(entry.text)}
-                                  className="rounded-md border border-sage-700 text-sage-700 px-3 py-1 text-xs font-medium hover:bg-sage-50"
-                                >
-                                  Copier
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => handleDeleteLibraryEntry(entry.id)}
-                                  className="rounded-md border border-red-600 text-red-600 px-3 py-1 text-xs font-medium hover:bg-red-50"
-                                >
-                                  Supprimer
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                </div>
-              )}
-            </div>
           </div>
         )}
+
+        <div className="mt-6 pt-4 border-t border-sage-100">
+          <button
+            type="button"
+            onClick={() => setLibraryOpen((v) => !v)}
+            className="text-sm font-semibold text-sage-700"
+          >
+            📚 Mes contenus sauvegardés ({library.length})
+          </button>
+          {libraryOpen && (
+            <div className="mt-2 space-y-2 max-h-80 overflow-y-auto">
+              {library.length === 0 && (
+                <p className="text-xs text-sage-300">Rien d&apos;enregistré pour l&apos;instant.</p>
+              )}
+              {library.map((entry) => {
+                  const expanded = expandedIds.has(entry.id);
+                  const dateStr = new Date(entry.created_at).toLocaleString("fr-FR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+                  return (
+                    <div key={entry.id} className="border border-sage-100 rounded-md p-3 text-sm">
+                      <div
+                        className="flex justify-between items-center cursor-pointer gap-2"
+                        onClick={() => toggleExpanded(entry.id)}
+                      >
+                        <span className="truncate">
+                          <strong>{entry.format}</strong> · {entry.role}{" "}
+                          <span className="text-sage-300 text-xs">{dateStr}</span>
+                        </span>
+                        <span className="text-sage-300 shrink-0">{expanded ? "▴" : "▾"}</span>
+                      </div>
+                      {expanded && (
+                        <div className="mt-2 pt-2 border-t border-sage-100">
+                          <pre className="whitespace-pre-wrap text-xs">{entry.texte}</pre>
+                          <div className="flex gap-2 mt-2">
+                            <button
+                              type="button"
+                              onClick={() => handleCopyLibraryEntry(entry.texte)}
+                              className="rounded-md border border-sage-700 text-sage-700 px-3 py-1 text-xs font-medium hover:bg-sage-50"
+                            >
+                              Copier
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteLibraryEntry(entry.id)}
+                              className="rounded-md border border-red-600 text-red-600 px-3 py-1 text-xs font-medium hover:bg-red-50"
+                            >
+                              Supprimer
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+            </div>
+          )}
+        </div>
 
         <footer className="mt-10 pt-4 border-t border-sage-100 text-xs text-sage-300 flex gap-3 justify-center">
           <a href="/mentions-legales" className="hover:underline">Mentions légales</a>
