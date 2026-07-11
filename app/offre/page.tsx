@@ -394,10 +394,10 @@ export default function Offre() {
 
         <section className="space-y-2 text-center">
           <h2 className="font-serif text-lg font-semibold text-sage-800">
-            Ton contenu Instagram, écrit à ta place, sans plus jamais sonner générique.
+            Les 50 places de l&apos;offre de lancement ne dureront pas.
           </h2>
           <a href={STRIPE_PAYMENT_LINK} className="text-sage-700 font-semibold hover:underline">
-            Rejoins les 50 premières clientes →
+            Je réserve ma place →
           </a>
         </section>
 
