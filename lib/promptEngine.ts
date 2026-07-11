@@ -93,7 +93,11 @@ RÈGLE DE DATE : nous sommes en juillet 2026. N'invente jamais une actualité, u
 
 RÈGLE DE PONCTUATION, NON NÉGOCIABLE : n'utilise jamais le tiret cadratin (—) dans le texte généré, sous aucune forme, ni pour marquer une pause, ni une opposition, ni une liste. C'est une signature reconnaissable de texte généré par IA que la lectrice repère instinctivement. Remplace-le toujours par un point, une virgule, deux-points, ou reformule en deux phrases courtes distinctes.
 
-RÈGLE — JAMAIS DE SOURCE INVENTÉE : ne cite jamais un nom d'étude, d'institut ou d'entreprise ("une étude HubSpot", "selon une enquête de X") avec un chiffre précis si cette source n'a pas été fournie explicitement dans le contexte donné plus bas. C'est une fabrication qui expose la créatrice à citer une fausse source publiquement — bien plus grave qu'un chiffre vague. Si tu veux illustrer un ordre de grandeur sans donnée réelle, formule-le comme une observation qualitative ("la plupart des...", "dans mon expérience...") jamais comme une statistique sourcée.
+RÈGLE — JAMAIS DE FAIT INVENTÉ, RÈGLE PARMI LES PLUS IMPORTANTES : n'invente jamais un fait précis et vérifiable présenté comme réel, sous aucune forme. Ça couvre trois cas, tout aussi graves les uns que les autres, avec ou sans chiffre dedans :
+1. En "je" : une action, une expérience ou un résultat attribué à la créatrice elle-même ("j'ai vendu ma formation sans montrer mon visage", "ça fait un bail que je fais ça et ça a changé mes ventes").
+2. En "elle"/tiers : un cas client, une élève ou une abonnée inventée présentée comme un fait réel ("elle a ouvert le module 1, trois jours après elle avait sa structure montée") — un faux témoignage anonymisé est tout aussi fabriqué qu'un faux témoignage nommé.
+3. Une généralisation invérifiable présentée comme un pattern observé ("ce qui revient tout le temps dans les retours qu'on me fait", "beaucoup de mes clientes me disent que...") sans donnée réelle qui l'appuie.
+Le seul matériau autorisé pour ces trois cas est ce qui a été fourni explicitement dans le contexte donné plus bas (offre, sujet, "Donnée réelle à utiliser", voix). Sans donnée réelle fournie, reste sur le mécanisme ou la promesse générique de l'offre elle-même, une observation générale, ou une émotion — jamais un cas, un chiffre ou un pattern précis inventé ("je me reconnais tellement là-dedans" plutôt que d'inventer un événement vécu ou un cas client). RÈGLE DE REGISTRE, NON NÉGOCIABLE : respecte strictement le registre imposé pour l'angle (tu / je / mixte) donné plus bas — en registre "tu", ne bascule JAMAIS en "je" pour inventer un vécu ou un résultat personnel, reste adressé à la lectrice. Ça inclut aussi le fait de citer un nom d'étude, d'institut ou d'entreprise ("une étude HubSpot", "selon une enquête de X") avec un chiffre si cette source n'a pas été fournie.
 
 ⚠️ IMPORTANT : "impeccable" ne veut PAS dire "soutenu" ou "littéraire". Une phrase peut être 100% relâchée, orale, familière, pleine de tournures parlées — et rester grammaticalement parfaite en même temps (bon accord, bonne conjugaison, pas de mot inventé). Ne confonds jamais "corriger les fautes" avec "rendre le texte plus propre/plus poli" — ce sont deux choses différentes. Si un échantillon de voix est fourni plus bas, il prime toujours sur toute tentation de lisser le style.
 
@@ -106,14 +110,14 @@ PIÈGES FRÉQUENTS À VÉRIFIER SYSTÉMATIQUEMENT AVANT DE RÉPONDRE (ce sont le
 RÈGLE DE TON, NON NÉGOCIABLE — évite absolument le style lisse/générique qu'on reconnaît dans le contenu IA par défaut :
 - Interdits stricts : "il est important de", "en effet", "de plus", "dans le monde d'aujourd'hui", "n'hésitez pas à", "que ce soit... ou...", toute phrase parfaitement symétrique et équilibrée qui ne prend aucun risque.
 - Préfère des phrases courtes, parfois volontairement incomplètes pour l'effet oral. Coupe des phrases là où une vraie personne couperait à l'oral.
-- Un détail concret et spécifique (un objet, un moment précis, un chiffre réel) vaut toujours mieux qu'une généralité, même bien tournée.
+- Un détail concret et spécifique (un objet, un moment précis, un chiffre réellement fourni dans le contexte, jamais un chiffre inventé) vaut toujours mieux qu'une généralité, même bien tournée.
 - Assume un point de vue tranché plutôt qu'une position équilibrée et prudente — un contenu qui ne dérange jamais personne ne marque personne.
 - Varie la longueur des phrases dans un même paragraphe — l'IA par défaut a tendance à produire des phrases toutes calibrées pareil, une vraie voix ne fait jamais ça.
 - Un hook n'a pas besoin d'être un uppercut en une seule phrase : il peut monter en cascade sur 2-3 phrases courtes qui creusent le même constat avant de basculer sur la vraie affirmation — cette montée progressive est aussi valide qu'une phrase-choc unique, ne réduis pas systématiquement à une seule ligne sèche.
 
 ANTI-PATTERNS DE HOOK À NE JAMAIS PRODUIRE : "Aujourd'hui je vous parle de…", "Salut moi c'est…", "Je m'appelle…" en ouverture, hooks vagues, non ciblés, alarmistes, fausses promesses, hook à rallonge.
 
-RÈGLE R3 — ANTI-CLICHÉ : détecte les patterns de hook usés et cliché et reformule-les toujours en version incarnée et spécifique à CETTE niche précise, jamais un hook cliché brut, même bien tourné. Exemple concret du principe : ne dis jamais "3 erreurs que tout le monde fait" — dis plutôt "l'erreur que je vois chez 9 clientes sur 10, et que j'ai faite aussi" ; ne dis jamais une comparaison abstraite du type "avant vs après" à plat — incarne-la dans une scène vécue, comme "le post que personne ne regarde vs celui qui fait répondre".
+RÈGLE R3 — ANTI-CLICHÉ : détecte les patterns de hook usés et cliché et reformule-les toujours en version incarnée et spécifique à CETTE niche précise, jamais un hook cliché brut, même bien tourné. Exemple concret du principe (sans inventer de chiffre, voir règle chiffre inventé plus haut) : ne dis jamais "3 erreurs que tout le monde fait" — dis plutôt "l'erreur que je vois revenir sans arrêt chez mes clientes, et que j'ai faite aussi" ; ne dis jamais une comparaison abstraite du type "avant vs après" à plat — incarne-la dans une scène vécue, comme "le post que personne ne regarde vs celui qui fait répondre".
 
 RÈGLE — TOUJOURS CONVERTIR L'INFO EN ACTION UNIQUE : ne livre jamais une information brute sans la transformer en une action unique, concrète, que la lectrice peut faire immédiatement — particulièrement important pour AT13 (contenu sauvegardable) et toute slide de valeur.
 
@@ -236,11 +240,11 @@ export function buildHooksPrompt(ctx: GenContext): PromptPair {
 
 UNE AMORCE DE STORY N'EST PAS UN HOOK DE REEL/CARROUSEL — DIFFÉRENCE FONDAMENTALE : un hook doit arrêter un scroll dans un feed compétitif, face à des dizaines d'autres posts. Une story n'a AUCUN scroll à arrêter — elle est déjà ouverte par quelqu'un qui te suit et qui tape déjà à travers ta séquence. L'amorce n'a pas besoin d'accrocher au sens marketing du terme : c'est une entrée en matière naturelle, comme si tu commençais à raconter un truc à une copine — un constat, une scène, une pensée du moment. Jamais de mécanisme de rupture appuyé (pas de "vérité qui dérange" version choc, pas de chiffre balancé pour choquer) — juste une ouverture qui donne envie de rester par curiosité humaine, pas par réflexe de scroll-stop.
 
-EXEMPLES CALIBRÉS DE CE QUI SONNE JUSTE (le ton à atteindre, pas le fond à copier) :
+EXEMPLES CALIBRÉS DE CE QUI SONNE JUSTE (le ton à atteindre, jamais un événement précis à inventer — voir règle "jamais de fait personnel inventé" plus bas) :
 - "Bon. J'avoue, j'ai failli pas la poster celle-là."
-- "Ok donc une abonnée m'a écrit un truc ce matin et j'arrête pas d'y repenser."
-- "J'étais en train de répondre à mes DM et faut que je vous dise un truc."
-- "Tu vois le genre de truc qu'on se dit "je le fais demain" depuis 3 semaines ?"
+- "Ça fait un moment que j'ai un truc en tête et j'arrête pas d'y repenser."
+- "Je suis en plein dans mes DM là et faut que je vous dise un truc."
+- "Tu vois le genre de truc qu'on se dit "je le fais demain" depuis un moment ?"
 - "Franchement je sais pas trop comment le dire mais bon, on y va."
 CE QUI SONNE FAUX (à éviter absolument, ça sonne comme un hook déguisé) :
 - "3 choses que personne ne te dit sur X" (c'est une liste de carrousel)
@@ -266,9 +270,9 @@ AVANT D'ÉCRIRE, DÉCIDE L'ÉMOTION VISÉE — PAS SEULEMENT LE SUJET : demande-
 EXEMPLES CALIBRÉS DE CE QUI SONNE JUSTE (le principe à atteindre, pas le fond à copier — 5 mécanismes différents, pas un seul à réutiliser systématiquement) :
 - Contradiction en 2 temps (croyance affirmée, puis retournée net) : "On te dit qu'il faut poster tous les jours pour percer. Faux. L'audience qui achète, tu la construis avec 3 posts qui disent vraiment quelque chose."
 - Montée en cascade avant la bascule (2-3 phrases courtes qui creusent le même constat) : "Tu retouches ton offre pour la 4e fois ce mois-ci. Tu changes le prix. Tu changes le nom. Le problème, c'était jamais ça."
-- Durée courte + durée longue (ancre la crédibilité par la constance) : "Les 10 minutes que je passe chaque matin à relire mes 3 derniers posts, ça fait 2 ans que je fais ça, et c'est ce qui a le plus changé mes ventes."
+- Habitude reconnaissable retournée vers la lectrice (jamais un vécu inventé de la créatrice) : "Tu relis ton dernier post trois fois avant de le publier, tu changes une virgule, tu le republies à l'identique. Ça change jamais rien à tes ventes."
 - Question directe qui frappe (pas de contradiction, juste une question qui force à répondre intérieurement) : "Combien de fois t'as réécrit ce post avant de finalement pas le poster ?"
-- Aveu personnel bref, sans détour (une phrase, pas de mise en scène) : "J'ai supprimé 40 posts avant de comprendre pourquoi aucun ne marchait."
+- Constat direct sans détour (une phrase, jamais un fait précis inventé sur la créatrice elle-même) : "Tu crois que ton offre a un problème. Le problème, c'est que personne sait qu'elle existe."
 CE QUI SONNE FAUX (à éviter) : une promesse générique du type "comment faire X" sans tension ni affirmation personnelle — un hook qui informe mais ne déstabilise rien ne retient jamais un scroll.
 
 ${SHARED_RULES}${voiceInstructionHooks}
@@ -281,11 +285,19 @@ Format de réponse STRICT : si un sujet doit être choisi par toi, une ligne "SU
 3. [hook]
 Chaque hook doit explorer une variante différente du même angle imposé (pas 3 fois la même idée reformulée à peine). IMPORTANT : les 3 propositions doivent TOUTES viser le niveau Excellent du gradient de qualité donné plus haut — ne produis JAMAIS volontairement une version faible ou moyenne parmi les 3 pour "varier". La variation doit porter sur le mécanisme/l'angle choisi à l'intérieur de chaque hook, pas sur le niveau de qualité entre les 3.`;
 
+  const CN12Hooks = ROLES.CONNEXION.find((r) => r[0] === "CN12") as Role;
+  const fallbackNoteHooks =
+    NEEDS_PROOF.includes(role[0]) && !ctx.preuve
+      ? `\nAucune donnée réelle fournie — bascule officielle vers le fallback anti-fabrication CN12 (${CN12Hooks[1]} : ${CN12Hooks[2]}). Ne refuse jamais de proposer, mais n'invente aucun cas concret : pas de "elle", pas de cliente ou élève anonymisée mise en scène, pas de généralisation du type "ce qu'on me dit souvent". Parle du mécanisme ou de la promesse de l'offre elle-même, en "tu" ou en "je" seulement pour une observation générale, jamais pour un cas vécu inventé.`
+      : ctx.preuve
+        ? "\nDonnée réelle : " + ctx.preuve
+        : "";
+
   const user = `Type d'offre : ${ctx.offreType} (${CREDIBILITE[ctx.offreType]})
 Offre précise + cliente : ${ctx.offre}${sujetInstruction}
 Objectif : ${ctx.objectif}
 Angle imposé : ${role[0]} — ${role[1]} (${role[2]}), registre ${role[3]}
-Format : ${ctx.format}${ctx.preuve ? "\nDonnée réelle : " + ctx.preuve : ""}${ctx.voix ? '\nVoix : "' + ctx.voix + '"' : ""}
+Format : ${ctx.format}${fallbackNoteHooks}${ctx.voix ? '\nVoix : "' + ctx.voix + '"' : ""}
 
 Propose 3 ${elementLabel}s pour cet angle précis.`;
 
@@ -373,7 +385,7 @@ PONT STORY → DM, ÉLÉMENT OBLIGATOIRE ET DISTINCT (à écrire après les fram
     ctx.format === "Carrousel"
       ? `\n\nSTRUCTURE CARROUSEL (8-10 slides, sauf structure spécifique fournie plus bas) : Slide 1 = hook fourni tel quel → Slide 2 = Rétention, ET DOIT CONTENIR SON PROPRE HOOK (l'algorithme peut réafficher le carrousel en commençant directement à cette slide — elle doit donc tenir seule, pas seulement enchaîner sur la slide 1) → Valeur (1 idée/slide, un titre court de 5-7 mots + 2-3 phrases) → Récap (ne te contente jamais de reformuler ce qui précède : ajoute un bonus ou un angle non mentionné avant) → CTA (mot-clé + bénéfice). Puis une LÉGENDE complète et OBLIGATOIRE (jamais omise) : ouverture distincte du hook, arc tu→je→tu, CTA selon objectif, 3-5 hashtags ciblés.
 
-RÈGLE CRITIQUE SUR CETTE LÉGENDE — JAMAIS UN RÉSUMÉ DES SLIDES : les slides ont déjà fait tout le travail de démonstration (l'argument, la métaphore, la méthode) — la légende ne le refait JAMAIS avec d'autres mots, même reformulé différemment. Elle apporte une couche DIFFÉRENTE et complémentaire : une anecdote personnelle liée au sujet, un détail des coulisses, la voix intérieure au moment des faits, ou un angle adjacent que les slides n'ont pas traité. Avant de l'écrire, vérifie : est-ce que je suis en train de redire ce que les slides ont déjà dit, même avec d'autres mots ou une autre métaphore ? Si oui, change complètement d'angle.`
+RÈGLE CRITIQUE SUR CETTE LÉGENDE — JAMAIS UN RÉSUMÉ DES SLIDES : les slides ont déjà fait tout le travail de démonstration (l'argument, la métaphore, la méthode) — la légende ne le refait JAMAIS avec d'autres mots, même reformulé différemment. Elle apporte une couche DIFFÉRENTE et complémentaire : une anecdote personnelle liée au sujet (UNIQUEMENT si un vécu réel a été fourni dans le contexte plus bas, jamais inventée, voir règle "jamais de fait personnel inventé"), un détail des coulisses généré sans fait précis vérifiable, la voix intérieure au moment des faits, ou un angle adjacent que les slides n'ont pas traité. Sans vécu réel fourni, préfère une observation générale, une question ouverte à la lectrice, ou un angle adjacent plutôt que d'inventer une anecdote. Avant de l'écrire, vérifie : est-ce que je suis en train de redire ce que les slides ont déjà dit, même avec d'autres mots ou une autre métaphore ? Si oui, change complètement d'angle.`
       : "";
 
   const system = `Tu remplis le CORPS COMPLET d'un gabarit de contenu Instagram — ${
@@ -389,7 +401,7 @@ Réponds avec le gabarit ENTIER${ctx.format === "Story" ? "" : ", légende inclu
   const CN12 = ROLES.CONNEXION.find((r) => r[0] === "CN12") as Role;
   const fallbackNote =
     NEEDS_PROOF.includes(role[0]) && !ctx.preuve
-      ? `\nAucune donnée réelle fournie — bascule officielle vers le fallback anti-fabrication CN12 (${CN12[1]} : ${CN12[2]}), pas juste "rester vague".`
+      ? `\nAucune donnée réelle fournie — bascule officielle vers le fallback anti-fabrication CN12 (${CN12[1]} : ${CN12[2]}), pas juste "rester vague". N'invente aucun cas concret : pas de "elle", pas de cliente ou élève anonymisée mise en scène, pas de généralisation du type "ce qu'on me dit souvent". Parle du mécanisme ou de la promesse de l'offre elle-même.`
       : ctx.preuve
         ? "\nDonnée réelle : " + ctx.preuve
         : "";
