@@ -13,7 +13,7 @@ const CTA_CLASSES =
 const SYSTEME_FEATURES = [
   {
     titre: "49 angles, jamais un seul par situation",
-    texte: "15 angles pour arrêter le scroll, 18 pour créer la confiance, 16 pour déclencher la décision. Le Système choisit celui qui correspond exactement à ton objectif, jamais un angle générique recyclé partout.",
+    texte: "15 angles pour attirer une inconnue, 18 pour créer du lien, 16 pour déclencher la vente. Le Système choisit celui qui correspond exactement à ton objectif, jamais un angle générique recyclé partout.",
     icon: (
       <path
         strokeLinecap="round"

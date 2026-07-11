@@ -6,7 +6,7 @@ export default function CGV() {
 
         <p className="bg-amber-50 border border-amber-200 rounded-md p-3 text-amber-800">
           ⚠️ Modèle générique à faire relire et compléter par un professionnel du droit avant
-          toute mise en ligne réelle — les clauses ci-dessous sont un point de départ, pas un
+          toute mise en ligne réelle : les clauses ci-dessous sont un point de départ, pas un
           document juridique validé.
         </p>
 
@@ -21,10 +21,10 @@ export default function CGV() {
         <p>
           Le prix est indiqué en euros TTC au moment de l&apos;achat. Le paiement est unique et
           donne accès à l&apos;outil selon les modalités décrites sur la page de vente
-          (générations incluses, recharges disponibles à l&apos;unité).
+          (générations incluses, packs de générations disponibles en supplément).
         </p>
 
-        <h2 className="font-semibold pt-2">Droit de rétractation — contenu numérique</h2>
+        <h2 className="font-semibold pt-2">Droit de rétractation (contenu numérique)</h2>
         <p>
           Conformément à l&apos;article L221-28 du Code de la consommation, l&apos;accès étant un
           contenu numérique fourni immédiatement après paiement et avec l&apos;accord exprès de la

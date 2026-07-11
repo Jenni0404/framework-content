@@ -6,12 +6,12 @@ export default function MentionsLegales() {
 
         <p className="bg-amber-50 border border-amber-200 rounded-md p-3 text-amber-800">
           ⚠️ Modèle générique à faire relire et compléter par un professionnel du droit avant
-          toute mise en ligne réelle — ce texte ne remplace pas un avocat ou un expert-comptable.
+          toute mise en ligne réelle : ce texte ne remplace pas un avocat ou un expert-comptable.
         </p>
 
         <h2 className="font-semibold pt-2">Éditeur du site</h2>
         <p>
-          [Nom / raison sociale], [statut juridique — ex. auto-entreprise], [adresse], [numéro
+          [Nom / raison sociale], [statut juridique, ex. auto-entreprise], [adresse], [numéro
           SIRET], [email de contact]. Directrice de la publication : [Nom].
         </p>
 
