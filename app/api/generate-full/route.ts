@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
-import { buildFullPrompt, type GenContext } from "@/lib/promptEngine";
+import { buildFullPrompt, parseFullResponse, type GenContext } from "@/lib/promptEngine";
 import { checkRateLimit, getClientKey } from "@/lib/rateLimit";
 
 interface GenerateFullBody extends GenContext {
@@ -80,9 +80,12 @@ export async function POST(req: Request) {
       );
     }
 
+    const { text: gabarit, pourquoi } = parseFullResponse(text.trim());
+
     return NextResponse.json({
       ok: true,
-      text: text.trim(),
+      text: gabarit,
+      pourquoi,
       truncated: stopReason === "max_tokens",
       debug: { stop_reason: stopReason, usage: lastUsage },
     });

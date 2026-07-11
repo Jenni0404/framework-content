@@ -88,6 +88,7 @@ export default function Home() {
   const [hooks, setHooks] = useState<string[]>([]);
   const [chosenHook, setChosenHook] = useState("");
   const [fullText, setFullText] = useState("");
+  const [pourquoi, setPourquoi] = useState("");
   const [truncated, setTruncated] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -152,6 +153,7 @@ export default function Home() {
     setLoadingHooks(true);
     setHooks([]);
     setFullText("");
+    setPourquoi("");
     setTruncated(false);
     setErrorFull("");
     try {
@@ -180,6 +182,7 @@ export default function Home() {
     setLoadingFull(true);
     setErrorFull("");
     setFullText("");
+    setPourquoi("");
     setTruncated(false);
     try {
       const res = await fetch("/api/generate-full", {
@@ -193,6 +196,7 @@ export default function Home() {
         return;
       }
       setFullText(data.text);
+      setPourquoi(typeof data.pourquoi === "string" ? data.pourquoi : "");
       setTruncated(Boolean(data.truncated));
     } catch (err) {
       setErrorFull(err instanceof Error ? err.message : "Erreur réseau.");
@@ -271,6 +275,7 @@ export default function Home() {
     setHooks([]);
     setChosenHook("");
     setFullText("");
+    setPourquoi("");
     setTruncated(false);
     setError1("");
     setErrorFull("");
@@ -536,10 +541,14 @@ export default function Home() {
                 <div className="bg-sage-700 text-cream rounded-md p-4 mt-3 text-sm space-y-1">
                   <p className="font-serif font-semibold text-base">Pourquoi ce post</p>
                   <p>
-                    {selectedRole ? `Cet angle : ${selectedRole.description} ` : ""}
-                    Combiné à l&apos;objectif {OBJECTIF_LABEL[objectif]}, ça donne à ta lectrice{" "}
-                    {READER_BENEFIT[objectif]}.
-                    {isStory ? " Ici, en story : tu t'adresses à des abonnées qui te suivent déjà, pas à des inconnues." : ""}
+                    {pourquoi || (
+                      <>
+                        {selectedRole ? `Cet angle : ${selectedRole.description} ` : ""}
+                        Combiné à l&apos;objectif {OBJECTIF_LABEL[objectif]}, ça donne à ta lectrice{" "}
+                        {READER_BENEFIT[objectif]}.
+                        {isStory ? " Ici, en story : tu t'adresses à des abonnées qui te suivent déjà, pas à des inconnues." : ""}
+                      </>
+                    )}
                   </p>
                 </div>
               </div>

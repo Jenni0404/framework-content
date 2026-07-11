@@ -378,8 +378,10 @@ PONT STORY → DM, ÉLÉMENT OBLIGATOIRE ET DISTINCT (à écrire après les fram
 
   const legendeRule =
     ctx.format === "Story"
-      ? `\n\nPAS DE LÉGENDE SUR UNE STORY : une story n'a aucune légende, aucune caption séparée — ne génère RIEN qui ressemble à une légende de post. Le contenu s'arrête aux frames + le pont DM. Termine ta réponse juste après le pont DM.`
+      ? `\n\nPAS DE LÉGENDE SUR UNE STORY : une story n'a aucune légende, aucune caption séparée — ne génère RIEN qui ressemble à une légende de post. Le contenu s'arrête aux frames + le pont DM, puis la ligne POURQUOI CE POST décrite plus bas.`
       : `\n\nPRIORITÉ ABSOLUE SI L'ESPACE MANQUE : la légende complète ne doit JAMAIS être coupée ni omise, quitte à raccourcir le nombre de slides. Termine toujours par la légende entière, hashtags compris — ne t'arrête jamais en plein milieu d'une phrase.`;
+
+  const pourquoiRule = `\n\nPOURQUOI CE POST, ÉLÉMENT FINAL OBLIGATOIRE : une fois le gabarit entièrement terminé (légende et hashtags compris si applicable, pont DM compris pour une story), ajoute une ligne séparée commençant exactement par "POURQUOI CE POST : " suivie d'une explication de 1 à 2 phrases sur pourquoi ce mécanisme précis (cet angle combiné à cet objectif) convient à CETTE offre et à CE sujet précis donnés plus bas — jamais une description générique de l'angle recopiée telle quelle. Ancre l'explication dans un détail concret du contexte fourni (l'offre, le sujet, ou le hook choisi), jamais une formule qui marcherait pour n'importe quel post.`;
 
   const carrouselInstruction =
     ctx.format === "Carrousel"
@@ -394,9 +396,9 @@ RÈGLE CRITIQUE SUR CETTE LÉGENDE — JAMAIS UN RÉSUMÉ DES SLIDES : les slide
       : "le hook est déjà choisi et figé, tu ne le regénères jamais"
   }, tu construis tout autour. Le format demandé est ${ctx.format} : ne mélange JAMAIS les codes d'un autre format (pas de "légende" sur une story, pas de slides sur un reel, pas de mécanisme de hook scroll-stop sur une story, etc.) — chaque format a ses propres règles ci-dessous, applique UNIQUEMENT celles qui correspondent au format demandé.
 
-${SHARED_RULES}${carrouselInstruction}${reelInstruction}${storyInstruction}${ctaRule}${structureSpecifique}${voiceInstruction}${legendeRule}
+${SHARED_RULES}${carrouselInstruction}${reelInstruction}${storyInstruction}${ctaRule}${structureSpecifique}${voiceInstruction}${legendeRule}${pourquoiRule}
 
-Réponds avec le gabarit ENTIER${ctx.format === "Story" ? "" : ", légende incluse sans exception"}, en français impeccable mais fidèle à la voix donnée. Pas de préambule.`;
+Réponds avec le gabarit ENTIER${ctx.format === "Story" ? "" : ", légende incluse sans exception"}, en français impeccable mais fidèle à la voix donnée, puis la ligne POURQUOI CE POST décrite plus haut. Pas de préambule.`;
 
   const CN12 = ROLES.CONNEXION.find((r) => r[0] === "CN12") as Role;
   const fallbackNote =
@@ -417,4 +419,21 @@ Hook choisi (ne pas regénérer, construire tout autour) : "${chosenHook}"
 Génère le gabarit ${ctx.format} complet avec ce hook exact, légende incluse.`;
 
   return { system, user };
+}
+
+export interface ParsedFull {
+  text: string;
+  pourquoi: string;
+}
+
+// Sépare la ligne "POURQUOI CE POST : ..." (ajoutée par pourquoiRule) du reste du gabarit.
+export function parseFullResponse(rawText: string): ParsedFull {
+  const match = rawText.match(/\n?POURQUOI CE POST\s*:\s*([\s\S]+)$/i);
+  if (!match || match.index === undefined) {
+    return { text: rawText.trim(), pourquoi: "" };
+  }
+  return {
+    text: rawText.slice(0, match.index).trim(),
+    pourquoi: match[1].trim(),
+  };
 }
