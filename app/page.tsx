@@ -23,17 +23,11 @@ interface LibraryEntry {
   texte: string;
 }
 
-const OBJECTIFS: { value: Objectif; label: string; ratio: string }[] = [
-  { value: "ATTRACTION", label: "Attraction : s'arrêter", ratio: "40%" },
-  { value: "CONNEXION", label: "Connexion : confiance", ratio: "30%" },
-  { value: "CONVERSION", label: "Conversion : décision", ratio: "30%" },
+const OBJECTIFS: { value: Objectif; label: string }[] = [
+  { value: "ATTRACTION", label: "Attraction : attirer une inconnue" },
+  { value: "CONNEXION", label: "Connexion : créer du lien" },
+  { value: "CONVERSION", label: "Conversion : déclencher la vente" },
 ];
-
-const OBJECTIF_RATIO_STYLE: Record<Objectif, string> = {
-  ATTRACTION: "bg-sage-100 text-ink",
-  CONNEXION: "bg-sage-700 text-cream",
-  CONVERSION: "bg-sage-300 text-cream",
-};
 
 // Ce que la lectrice retire concrètement de chaque objectif — jamais le biais/l'émotion
 // exacts de la taxonomie, juste le bénéfice pour elle, en langage courant.
@@ -320,18 +314,6 @@ export default function Home() {
                     </option>
                   ))}
                 </select>
-                <div className="flex gap-1 mt-1.5 text-[10px] font-semibold">
-                  {OBJECTIFS.map((o) => (
-                    <span
-                      key={o.value}
-                      className={`flex-1 text-center rounded py-1 ${OBJECTIF_RATIO_STYLE[o.value]} ${
-                        o.value === objectif ? "ring-2 ring-sage-800" : "opacity-70"
-                      }`}
-                    >
-                      {o.ratio}
-                    </span>
-                  ))}
-                </div>
               </div>
             </div>
 

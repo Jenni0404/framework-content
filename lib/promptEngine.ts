@@ -76,13 +76,13 @@ export const ROLES: Record<Objectif, Role[]> = {
 };
 
 export const CREDIBILITE: Record<string, string> = {
-  "Formation en affiliation / MRR": "elle vend une offre qu'elle a elle-même suivie → crédibilité = son propre parcours",
-  "Ma propre formation": "elle l'a créée → crédibilité = son expertise + résultats de ses élèves",
-  "Coaching": "vente de proximité → crédibilité = transformation client + sa présence",
-  "Accompagnement": "vente de proximité → crédibilité = transformation client + sa présence",
-  "SaaS / outil en ligne": "vente de démonstration → crédibilité = cas d'usage + avant/après concrets",
-  "Service": "vente de confiance → crédibilité = portfolio + processus + témoignages",
+  "Formation que j'ai créée": "elle l'a créée → crédibilité = son expertise + résultats de ses élèves",
+  "Formation ou produit que je revends": "elle vend une offre qu'elle a elle-même suivie → crédibilité = son propre parcours",
+  "Coaching / accompagnement individuel": "vente de proximité → crédibilité = transformation client + sa présence",
+  "Service / prestation": "vente de confiance → crédibilité = portfolio + processus + témoignages",
+  "E-commerce / produit physique": "vente de produit physique → crédibilité = qualité perçue + avis clients + visuel du produit en situation",
   "Produit digital": "vente d'impulsion raisonnée → crédibilité = aperçu + preuve d'utilité",
+  "SaaS / outil en ligne": "vente de démonstration → crédibilité = cas d'usage + avant/après concrets",
   "Autre": "crédibilité depuis son vécu réel, adaptée au contexte donné",
 };
 
