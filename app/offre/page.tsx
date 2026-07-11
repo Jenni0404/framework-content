@@ -3,7 +3,8 @@ import Link from "next/link";
 // Valeurs de travail, faciles à changer en un seul endroit :
 const SYSTEME_NOM = "Le Système";
 const PRIX_FONDATRICE = "67€";
-const GENERATIONS_INCLUSES = 150;
+const PRIX_BARRE = "147€";
+const GENERATIONS_INCLUSES = 200;
 const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/REMPLACER_PAR_LE_VRAI_LIEN";
 
 const CTA_CLASSES =
@@ -44,8 +45,8 @@ const SYSTEME_FEATURES = [
     ),
   },
   {
-    titre: "Un CTA choisi sur des chiffres, pas au hasard",
-    texte: "Mot-clé en commentaire vers DM convertit à 12-18%, contre 2-3% pour un lien en bio, banni du système. Le bon CTA dépend de ton objectif, jamais le même partout.",
+    titre: "Un CTA différent pour chaque objectif, jamais générique",
+    texte: "Partage en Attraction, réponse en Connexion, mot-clé en commentaire vers DM en Conversion. Jamais un simple lien en bio, banni du système. Le bon CTA dépend toujours de ton objectif.",
     icon: (
       <path
         strokeLinecap="round"
@@ -59,8 +60,8 @@ const SYSTEME_FEATURES = [
 const SYSTEME_CHIFFRES = [
   "49 angles éditoriaux",
   "3 objectifs : Attraction, Connexion, Conversion",
-  "0 chiffre inventé",
-  "12-18% de conversion, mot-clé → DM",
+  "Jamais de chiffre inventé",
+  "Mot-clé en DM, jamais lien en bio",
 ];
 
 const COMMENT_CA_MARCHE = [
@@ -72,10 +73,7 @@ const COMMENT_CA_MARCHE = [
 ];
 
 const BENEFICES = [
-  "Un accès à vie à l'outil, 150 générations incluses.".replace(
-    "150",
-    String(GENERATIONS_INCLUSES)
-  ),
+  `Un accès à vie à l'outil, ${GENERATIONS_INCLUSES} générations incluses, largement de quoi tenir plusieurs mois, même en publiant tous les jours.`,
   "Ta voix respectée, jamais un style générique qui écrase la tienne.",
   "Une bibliothèque pour retrouver les posts que tu as enregistrés, et y revenir quand tu veux.",
   `Des recharges à l'unité si t'as besoin de plus, une fois les ${GENERATIONS_INCLUSES} épuisées.`,
@@ -185,9 +183,9 @@ export default function Offre() {
             sonner générique.
           </h1>
           <p className="text-base text-ink/90">
-            Pas un prompt de plus. Un système construit après des mois d&apos;analyse, pour
-            écrire un carrousel, un reel ou une story qui te ressemble vraiment, idée en
-            tête ou pas.
+            Pas un prompt de plus. Un système construit après un an de travail dans le
+            domaine, pour écrire un carrousel, un reel ou une story qui te ressemble
+            vraiment, idée en tête ou pas.
           </p>
         </header>
 
@@ -286,7 +284,11 @@ export default function Offre() {
 
         <section className="relative isolate bg-cream space-y-4 border border-sage-100 rounded-md p-6 sm:p-8 shadow-sm text-center">
           <p className="text-sm font-semibold text-sage-700">Offre fondatrice : accès à vie, paiement unique</p>
-          <p className="font-serif text-5xl font-semibold text-sage-800">{PRIX_FONDATRICE}</p>
+          <p className="text-xs text-sage-700">Offre fondatrice limitée aux 50 premières clientes</p>
+          <p className="flex items-center justify-center gap-3">
+            <span className="text-lg text-sage-300 line-through">{PRIX_BARRE}</span>
+            <span className="font-serif text-5xl font-semibold text-sage-800">{PRIX_FONDATRICE}</span>
+          </p>
           <ul className="text-xs text-ink/80 space-y-1 max-w-xs mx-auto text-left">
             <li className="flex items-center gap-2">
               <span className="text-sage-700"><CheckIcon /></span>
@@ -294,7 +296,7 @@ export default function Offre() {
             </li>
             <li className="flex items-center gap-2">
               <span className="text-sage-700"><CheckIcon /></span>
-              Recharges à l&apos;unité si besoin
+              Des recharges abordables à l&apos;unité si besoin
             </li>
             <li className="flex items-center gap-2">
               <span className="text-sage-700"><CheckIcon /></span>
