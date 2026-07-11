@@ -88,7 +88,7 @@ const CE_QUE_CE_NEST_PAS = [
 const DOULEURS_BENEFICES = [
   {
     douleur: "Tu ne sais jamais quoi publier.",
-    benefice: "Le système choisit l'angle et te propose un sujet.",
+    benefice: "49 angles à choisir, un sujet proposé si tu n'en as pas.",
   },
   {
     douleur: "Tu publies dans le vide.",
