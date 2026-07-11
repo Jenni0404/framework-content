@@ -76,7 +76,7 @@ const BENEFICES = [
   `Un accès à vie à l'outil, ${GENERATIONS_INCLUSES} générations incluses.`,
   "Ta voix respectée, jamais un style générique qui écrase la tienne.",
   "Une bibliothèque pour retrouver les posts que tu as enregistrés, et y revenir quand tu veux.",
-  `Des recharges à l'unité si t'as besoin de plus, une fois les ${GENERATIONS_INCLUSES} épuisées.`,
+  `Des packs de générations si t'as besoin de plus, une fois les ${GENERATIONS_INCLUSES} épuisées.`,
 ];
 
 const CE_QUE_CE_NEST_PAS = [
@@ -115,7 +115,7 @@ const FAQ = [
   },
   {
     q: `Que se passe-t-il une fois mes ${GENERATIONS_INCLUSES} générations utilisées ?`,
-    r: "Tu peux acheter des recharges à l'unité, à tout moment, pour continuer à générer sans repayer l'accès complet.",
+    r: "Tu peux acheter un pack de générations, à tout moment, pour continuer à générer sans repayer l'accès complet.",
   },
   {
     q: "Les hooks vont-ils se répéter si je génère beaucoup sur le même objectif ?",
@@ -348,7 +348,7 @@ export default function Offre() {
             </li>
             <li className="flex items-center gap-2">
               <span className="text-sage-700"><CheckIcon /></span>
-              Des recharges abordables à l&apos;unité si besoin
+              Des packs de générations abordables si besoin
             </li>
             <li className="flex items-center gap-2">
               <span className="text-sage-700"><CheckIcon /></span>
@@ -394,10 +394,10 @@ export default function Offre() {
 
         <section className="space-y-2 text-center">
           <h2 className="font-serif text-lg font-semibold text-sage-800">
-            Les 50 places de l&apos;offre de lancement ne dureront pas.
+            Ton contenu Instagram n&apos;a plus besoin de te prendre la tête.
           </h2>
           <a href={STRIPE_PAYMENT_LINK} className="text-sage-700 font-semibold hover:underline">
-            Je réserve ma place →
+            Rejoins les 50 premières clientes →
           </a>
         </section>
 
