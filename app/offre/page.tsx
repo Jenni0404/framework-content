@@ -2,8 +2,8 @@ import Link from "next/link";
 
 // Valeurs de travail, faciles à changer en un seul endroit :
 const SYSTEME_NOM = "Le Système";
-const PRIX_FONDATRICE = "67€";
-const PRIX_BARRE = "147€";
+const PRIX_FONDATRICE = "97€";
+const PRIX_BARRE = "197€";
 const GENERATIONS_INCLUSES = 200;
 const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/REMPLACER_PAR_LE_VRAI_LIEN";
 
@@ -73,16 +73,45 @@ const COMMENT_CA_MARCHE = [
 ];
 
 const BENEFICES = [
-  `Un accès à vie à l'outil, ${GENERATIONS_INCLUSES} générations incluses, largement de quoi tenir plusieurs mois, même en publiant tous les jours.`,
+  `Un accès à vie à l'outil, ${GENERATIONS_INCLUSES} générations incluses.`,
   "Ta voix respectée, jamais un style générique qui écrase la tienne.",
   "Une bibliothèque pour retrouver les posts que tu as enregistrés, et y revenir quand tu veux.",
   `Des recharges à l'unité si t'as besoin de plus, une fois les ${GENERATIONS_INCLUSES} épuisées.`,
+];
+
+const CE_QUE_CE_NEST_PAS = [
+  "Pas de calendrier éditorial automatisé",
+  "Pas de publication automatique",
+  "Pas de community management",
+];
+
+const DOULEURS_BENEFICES = [
+  {
+    douleur: "Tu ne sais jamais quoi publier.",
+    benefice: "Le système choisit l'angle et te propose un sujet.",
+  },
+  {
+    douleur: "Tu publies dans le vide.",
+    benefice: "Chaque post suit un mécanisme pensé pour arrêter le scroll.",
+  },
+  {
+    douleur: "À fond une semaine, plus rien les deux suivantes.",
+    benefice: "Un post généré en quelques minutes, pas une contrainte de plus.",
+  },
+  {
+    douleur: "Le contenu, toujours la dernière priorité.",
+    benefice: "Tu choisis, tu publies, c'est tout.",
+  },
 ];
 
 const FAQ = [
   {
     q: "Comment je reçois mon accès après paiement ?",
     r: "Ton code d'accès personnel t'est envoyé par email juste après le paiement. Tu l'entres sur la page d'accès pour commencer à générer.",
+  },
+  {
+    q: "Pourquoi payer pour ça alors que ChatGPT est gratuit ?",
+    r: "Parce que ChatGPT ne connaît pas les 49 angles, les règles de CTA par objectif ni le filet anti-invention. Ici, tu n'as pas besoin de savoir formuler le bon prompt : le système pense la structure à ta place.",
   },
   {
     q: `Que se passe-t-il une fois mes ${GENERATIONS_INCLUSES} générations utilisées ?`,
@@ -179,13 +208,15 @@ export default function Offre() {
             Framework Content
           </span>
           <h1 className="font-serif text-3xl sm:text-5xl font-semibold text-sage-800 leading-snug">
-            Ton système éditorial qui écrit ton contenu Instagram à ta place, sans jamais
-            sonner générique.
+            Le système qui écrit ton contenu Instagram à ta place, sans jamais sonner
+            générique.
           </h1>
           <p className="text-base text-ink/90">
-            Pas un prompt de plus. Un système construit après un an de travail dans le
-            domaine, pour écrire un carrousel, un reel ou une story qui te ressemble
-            vraiment, idée en tête ou pas.
+            Un carrousel, un reel ou une story qui te ressemble vraiment — idée en tête ou
+            pas, grâce à un système éditorial propulsé par l&apos;IA.
+          </p>
+          <p className="bg-sage-700 text-cream text-center text-xs font-semibold uppercase tracking-wide rounded-md py-2 px-3">
+            Ne perds plus une minute à chercher quoi écrire
           </p>
         </header>
 
@@ -203,21 +234,29 @@ export default function Offre() {
           </div>
         </div>
 
-        <section className="space-y-3">
+        <section className="space-y-4">
           <h2 className="font-serif text-xl font-semibold text-sage-800">
-            Le vrai problème
+            Ce que tu vis, ce que tu gagnes
           </h2>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {DOULEURS_BENEFICES.map((d) => (
+              <li
+                key={d.douleur}
+                className="space-y-1 bg-white border border-sage-100 rounded-md p-4"
+              >
+                <p className="text-sm text-ink/50 line-through decoration-sage-300">
+                  {d.douleur}
+                </p>
+                <p className="text-sm font-medium text-sage-800">→ {d.benefice}</p>
+              </li>
+            ))}
+          </ul>
           <p className="text-sm text-ink/90 leading-relaxed">
-            Tu copies-colles un prompt trouvé quelque part.
-          </p>
-          <p className="text-sm text-ink/90 leading-relaxed">
-            L&apos;IA te sort un texte plat, générique. Le genre de texte qui pourrait
-            appartenir à n&apos;importe qui.
-          </p>
-          <p className="text-sm text-ink/90 leading-relaxed">
-            Le souci, ce n&apos;est jamais le prompt. C&apos;est qu&apos;aucun prompt tout seul
-            ne sait quel angle utiliser, quelle structure suivre selon le format, ni comment
-            éviter d&apos;inventer une preuve pour paraître crédible.
+            La plupart des outils d&apos;IA génèrent un texte à partir de rien de précis :
+            ça sort plat, générique, interchangeable. Ce qui manque, ce n&apos;est pas de la
+            motivation ni des idées — c&apos;est un système qui sait déjà quel angle utiliser,
+            quelle structure suivre selon le format, et comment ne jamais inventer une
+            preuve pour paraître crédible.
           </p>
         </section>
 
@@ -227,7 +266,8 @@ export default function Offre() {
             {SYSTEME_NOM}
           </h2>
           <p className="text-sm leading-relaxed opacity-95">
-            Le Système ne te sort jamais un truc générique. Quatre règles, non négociables :
+            Le Système combine l&apos;IA et des règles éditoriales strictes pour ne jamais
+            te sortir un truc générique. Quatre règles, non négociables :
           </p>
           <ul className="grid gap-4 sm:grid-cols-2 pt-2">
             {SYSTEME_FEATURES.map((f) => (
@@ -280,11 +320,23 @@ export default function Offre() {
               </li>
             ))}
           </ul>
+          <div className="pt-2 space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-wide text-sage-300">
+              Ce que ce n&apos;est pas, pour l&apos;instant
+            </p>
+            <ul className="space-y-1">
+              {CE_QUE_CE_NEST_PAS.map((item) => (
+                <li key={item} className="text-sm text-ink/70 leading-relaxed">
+                  — {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         <section className="relative isolate bg-cream space-y-4 border border-sage-100 rounded-md p-6 sm:p-8 shadow-sm text-center">
-          <p className="text-sm font-semibold text-sage-700">Offre fondatrice : accès à vie, paiement unique</p>
-          <p className="text-xs text-sage-700">Offre fondatrice limitée aux 50 premières clientes</p>
+          <p className="text-sm font-semibold text-sage-700">Offre de lancement : accès à vie, paiement unique</p>
+          <p className="text-xs text-sage-700">Offre de lancement limitée aux 50 premières clientes</p>
           <p className="flex items-center justify-center gap-3">
             <span className="text-lg text-sage-300 line-through">{PRIX_BARRE}</span>
             <span className="font-serif text-5xl font-semibold text-sage-800">{PRIX_FONDATRICE}</span>
@@ -338,6 +390,15 @@ export default function Offre() {
               </details>
             ))}
           </div>
+        </section>
+
+        <section className="space-y-2 text-center">
+          <h2 className="font-serif text-lg font-semibold text-sage-800">
+            Ton contenu Instagram, écrit à ta place, sans plus jamais sonner générique.
+          </h2>
+          <a href={STRIPE_PAYMENT_LINK} className="text-sage-700 font-semibold hover:underline">
+            Rejoins les 50 premières clientes →
+          </a>
         </section>
 
         <p className="text-center text-sm">
