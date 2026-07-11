@@ -57,13 +57,6 @@ const SYSTEME_FEATURES = [
   },
 ];
 
-const SYSTEME_CHIFFRES = [
-  "49 angles éditoriaux",
-  "3 objectifs : Attraction, Connexion, Conversion",
-  "Jamais de chiffre inventé",
-  "Mot-clé en DM, jamais lien en bio",
-];
-
 const COMMENT_CA_MARCHE = [
   "Tu décris ton offre et ta cliente, en une ou deux phrases, et tu choisis ton format : carrousel, reel ou story.",
   "Tu choisis ton objectif (Attraction, Connexion ou Conversion) et l'angle précis qui va avec, parmi les 49 disponibles.",
@@ -88,19 +81,19 @@ const CE_QUE_CE_NEST_PAS = [
 const DOULEURS_BENEFICES = [
   {
     douleur: "Ne jamais savoir quoi publier.",
-    benefice: "49 angles à choisir, un sujet proposé si tu n'en as pas.",
+    benefice: "49 angles à choisir, un sujet proposé même si tu n'as aucune idée.",
   },
   {
     douleur: "Se sentir invisible malgré les efforts.",
-    benefice: "Chaque post suit un mécanisme pensé pour arrêter le scroll.",
+    benefice: "Chaque post pensé pour arrêter le scroll, même sur ton compte le plus discret.",
   },
   {
     douleur: "Les cycles de motivation et d'abandon.",
-    benefice: "Un post généré en quelques minutes, pas une contrainte de plus.",
+    benefice: "Le système ne compte pas sur ta motivation : il fonctionne pareil, motivée ou pas, semaine après semaine.",
   },
   {
     douleur: "L'irrégularité chronique.",
-    benefice: "Tu choisis, tu publies, c'est tout.",
+    benefice: "Ta régularité ne dépend plus de ton emploi du temps : le post est prêt en quelques minutes, même la semaine où tu n'as pas le temps.",
   },
 ];
 
@@ -219,20 +212,6 @@ export default function Offre() {
             Ne perds plus une minute à chercher quoi écrire
           </p>
         </header>
-
-        <div className="overflow-hidden bg-sage-700 rounded-md py-3">
-          <div className="flex w-max animate-marquee gap-8">
-            {[...SYSTEME_CHIFFRES, ...SYSTEME_CHIFFRES].map((label, i) => (
-              <span
-                key={i}
-                className="flex items-center gap-8 text-sm font-medium text-cream whitespace-nowrap"
-              >
-                {label}
-                <span className="text-cream/40">•</span>
-              </span>
-            ))}
-          </div>
-        </div>
 
         <section className="space-y-4">
           <h2 className="font-serif text-xl font-semibold text-sage-800">
