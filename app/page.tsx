@@ -87,6 +87,8 @@ export default function Home() {
   const [truncated, setTruncated] = useState(false);
   const [copied, setCopied] = useState(false);
   const [balanceWarning, setBalanceWarning] = useState("");
+  const [nextRegenFree, setNextRegenFree] = useState(false);
+  const [regenConfirm, setRegenConfirm] = useState("");
 
   const [library, setLibrary] = useState<LibraryEntry[]>([]);
   const [libraryOpen, setLibraryOpen] = useState(false);
@@ -153,6 +155,8 @@ export default function Home() {
     setPourquoi("");
     setTruncated(false);
     setErrorFull("");
+    setNextRegenFree(false);
+    setRegenConfirm("");
     try {
       const res = await fetch("/api/generate-hooks", {
         method: "POST",
@@ -175,13 +179,10 @@ export default function Home() {
     }
   }
 
-  async function handleHookClick(hook: string) {
-    setChosenHook(hook);
+  async function generateFullFor(hook: string) {
     setLoadingFull(true);
     setErrorFull("");
-    setFullText("");
-    setPourquoi("");
-    setTruncated(false);
+    setRegenConfirm("");
     try {
       const res = await fetch("/api/generate-full", {
         method: "POST",
@@ -197,11 +198,27 @@ export default function Home() {
       setPourquoi(typeof data.pourquoi === "string" ? data.pourquoi : "");
       setTruncated(Boolean(data.truncated));
       setBalanceWarning(typeof data.warning === "string" ? data.warning : "");
+      setNextRegenFree(Boolean(data.nextRegenFree));
+      if (data.wasFreeRegen) {
+        setRegenConfirm("Régénération gratuite utilisée ✓");
+      }
     } catch (err) {
       setErrorFull(err instanceof Error ? err.message : "Erreur réseau.");
     } finally {
       setLoadingFull(false);
     }
+  }
+
+  async function handleHookClick(hook: string) {
+    setChosenHook(hook);
+    setFullText("");
+    setPourquoi("");
+    setTruncated(false);
+    await generateFullFor(hook);
+  }
+
+  async function handleRegenerate() {
+    await generateFullFor(chosenHook);
   }
 
   async function handleCopy() {
@@ -278,6 +295,8 @@ export default function Home() {
     setTruncated(false);
     setError1("");
     setErrorFull("");
+    setNextRegenFree(false);
+    setRegenConfirm("");
   }
 
   return (
@@ -514,6 +533,17 @@ export default function Home() {
               ))}
             </div>
 
+            <button
+              type="button"
+              onClick={handleStep1}
+              disabled={loadingHooks || loadingFull}
+              className={`w-full py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${ghostButtonClass}`}
+            >
+              {loadingHooks
+                ? "Je régénère les hooks…"
+                : `🔄 Régénérer les ${elementLabel}s`}
+            </button>
+
             {loadingFull && (
               <p className="text-sm italic text-sage-300">
                 Je construis le post complet avec ce hook… (jusqu&apos;à 60-90 secondes)
@@ -543,8 +573,23 @@ export default function Home() {
                     💾 Enregistrer
                   </button>
                 </div>
+                <button
+                  type="button"
+                  onClick={handleRegenerate}
+                  disabled={loadingFull || !nextRegenFree}
+                  className={`w-full mt-2 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${ghostButtonClass}`}
+                >
+                  {loadingFull
+                    ? "Je régénère…"
+                    : nextRegenFree
+                      ? "🔄 Régénérer gratuitement"
+                      : "Régénération gratuite déjà utilisée — change de hook pour varier"}
+                </button>
                 {saveConfirm && (
                   <p className="text-xs text-sage-700 mt-1">{saveConfirm}</p>
+                )}
+                {regenConfirm && (
+                  <p className="text-xs text-sage-700 mt-1">{regenConfirm}</p>
                 )}
 
                 <div className="bg-sage-700 text-cream rounded-md p-4 mt-3 text-sm space-y-1">

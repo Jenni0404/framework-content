@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { buildFullPrompt, parseFullResponse, type GenContext } from "@/lib/promptEngine";
 import { checkRateLimit, getClientKey } from "@/lib/rateLimit";
-import { getCurrentClientId, getGenerationsRestantes, lowBalanceWarning } from "@/lib/auth";
+import { getCurrentClientId, lowBalanceWarning } from "@/lib/auth";
 import { sql } from "@/lib/db";
 
 interface GenerateFullBody extends GenContext {
@@ -38,15 +38,46 @@ export async function POST(req: Request) {
     );
   }
 
+  const chosenHook = body.chosenHook.trim();
+
   const clientId = await getCurrentClientId();
   if (!clientId) {
     return NextResponse.json({ ok: false, error: "Non autorisé." }, { status: 401 });
   }
-  const remainingBeforeGen = await getGenerationsRestantes(clientId);
-  if (remainingBeforeGen === null) {
+  const clientRows = await sql`
+    SELECT generations_restantes, dernier_hook_genere, regen_gratuite_utilisee
+    FROM clients WHERE id = ${clientId} LIMIT 1
+  `;
+  if (clientRows.length === 0) {
     return NextResponse.json({ ok: false, error: "Compte introuvable." }, { status: 401 });
   }
-  if (remainingBeforeGen <= 0) {
+  const client = clientRows[0] as {
+    generations_restantes: number;
+    dernier_hook_genere: string | null;
+    regen_gratuite_utilisee: boolean;
+  };
+
+  // Régénération gratuite : même hook que la dernière génération, et pas encore utilisée
+  // pour ce hook précis. Toujours vérifié côté serveur (jamais un état client) pour ne pas
+  // pouvoir être déclenché en boucle.
+  const sameHookAsLast = client.dernier_hook_genere === chosenHook;
+  const isFreeRegen = sameHookAsLast && !client.regen_gratuite_utilisee;
+
+  // Une seule régénération gratuite par post, jamais de deuxième — même payante. Le bon
+  // réflexe si le résultat ne convient toujours pas, c'est de changer d'angle (49 disponibles),
+  // pas d'insister sur le même hook.
+  if (sameHookAsLast && client.regen_gratuite_utilisee) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "Tu as déjà utilisé ta régénération gratuite pour ce post. Choisis un autre angle pour continuer.",
+        regenExhausted: true,
+      },
+      { status: 403 }
+    );
+  }
+
+  if (!isFreeRegen && client.generations_restantes <= 0) {
     return NextResponse.json(
       { ok: false, error: "Tu as utilisé toutes tes générations. Achète un pack de générations pour continuer." },
       { status: 402 }
@@ -59,7 +90,7 @@ export async function POST(req: Request) {
   const MAX_CONTINUATIONS = 2;
 
   try {
-    const { system, user } = buildFullPrompt(body, body.chosenHook);
+    const { system, user } = buildFullPrompt(body, chosenHook);
     const messages: Anthropic.MessageParam[] = [{ role: "user", content: user }];
 
     let text = "";
@@ -99,16 +130,31 @@ export async function POST(req: Request) {
 
     const { text: gabarit, pourquoi } = parseFullResponse(text.trim());
 
-    // Décompte atomique : la clause WHERE empêche de descendre sous 0 même en
-    // cas de double requête simultanée. Le post est déjà généré à ce stade
-    // (coût API déjà engagé) donc on le renvoie dans tous les cas, même si le
-    // solde était déjà tombé à 0 entre-temps.
-    const decRows = await sql`
-      UPDATE clients SET generations_restantes = generations_restantes - 1
-      WHERE id = ${clientId} AND generations_restantes > 0
-      RETURNING generations_restantes
-    `;
-    const remaining = decRows.length > 0 ? (decRows[0].generations_restantes as number) : 0;
+    // Le post est déjà généré à ce stade (coût API déjà engagé) donc on le renvoie dans
+    // tous les cas, même si le décompte ci-dessous se comporte de façon inattendue.
+    let remaining = client.generations_restantes;
+    let nextRegenFree: boolean;
+
+    if (isFreeRegen) {
+      // Régénération gratuite consommée : aucun décompte, mais on la marque utilisée
+      // pour ce hook précis — la prochaine tentative sur ce même hook sera bloquée
+      // (voir vérification plus haut), pas repayée.
+      await sql`UPDATE clients SET regen_gratuite_utilisee = true WHERE id = ${clientId}`;
+      nextRegenFree = false;
+    } else {
+      // Nouveau hook (première génération, ou changement de hook) : décompte normal,
+      // et une régénération gratuite redevient disponible pour ce hook.
+      const decRows = await sql`
+        UPDATE clients
+        SET generations_restantes = generations_restantes - 1,
+            dernier_hook_genere = ${chosenHook},
+            regen_gratuite_utilisee = false
+        WHERE id = ${clientId} AND generations_restantes > 0
+        RETURNING generations_restantes
+      `;
+      remaining = decRows.length > 0 ? (decRows[0].generations_restantes as number) : 0;
+      nextRegenFree = true;
+    }
 
     return NextResponse.json({
       ok: true,
@@ -117,6 +163,8 @@ export async function POST(req: Request) {
       truncated: stopReason === "max_tokens",
       remaining,
       warning: lowBalanceWarning(remaining),
+      wasFreeRegen: isFreeRegen,
+      nextRegenFree,
       debug: { stop_reason: stopReason, usage: lastUsage },
     });
   } catch (err) {
