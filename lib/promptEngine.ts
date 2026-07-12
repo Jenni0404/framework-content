@@ -204,6 +204,7 @@ export interface GenContext {
   objectif: Objectif;
   roleId: string;
   preuve: string;
+  ressourceDM: string;
   format: Format;
   reelType: ReelType;
 }
@@ -371,10 +372,16 @@ ${storyTunnels[ctx.objectif]}
 PONT STORY → DM, ÉLÉMENT OBLIGATOIRE ET DISTINCT (à écrire après les frames, jamais fondu dedans) : le message que Jenni envoie en DM dès que quelqu'un répond au sticker ou au mot-clé — répondre en DM à toute réponse story est le mouvement le plus rentable et le plus sous-exploité, jamais laisser une réponse sans suite. Ton différent selon l'objectif (remerciement+relance en Connexion/Attraction, livraison de l'offre en Conversion). Pas de hashtags sur une story.`
       : "";
 
-  const ctaRule =
+  const ctaRuleBase =
     ctx.format === "Story"
-      ? `\nCTA par objectif SUR STORY (jamais de "commente X", ça n'existe pas sur une story) : ATTRACTION = action (partage/sauvegarde/abonnement, pas de mot-clé). CONNEXION = boîte à questions / réponse à la story. CONVERSION = mot-clé tapé directement en DM, ou tap sticker lien — jamais "commente" ni "lien en bio".`
-      : `\nCTA par objectif : ATTRACTION = partage/sauvegarde/abonnement (JAMAIS mot-clé commentaire). CONNEXION = réponse/commentaire/partage à une amie. CONVERSION = mot-clé en commentaire → DM, EXCLUSIVEMENT — "lien en bio" et "DM-moi" seuls sont FORMELLEMENT INTERDITS, ce ne sont jamais des CTA valides (le mot-clé→DM convertit à 12-18% contre 2-3% pour un lien en bio).`;
+      ? `\nCTA par objectif SUR STORY (jamais de "commente X", ça n'existe pas sur une story) : ATTRACTION = action (partage/sauvegarde/abonnement, pas de mot-clé, sauf ressource confirmée ci-dessous). CONNEXION = boîte à questions / réponse à la story (pas de mot-clé, sauf ressource confirmée ci-dessous). CONVERSION = mot-clé tapé directement en DM, ou tap sticker lien — jamais "commente" ni "lien en bio".`
+      : `\nCTA par objectif : ATTRACTION = partage/sauvegarde/abonnement par défaut (pas de mot-clé, sauf ressource confirmée ci-dessous). CONNEXION = réponse/commentaire/partage à une amie par défaut (pas de mot-clé, sauf ressource confirmée ci-dessous). CONVERSION = mot-clé en commentaire → DM, conversationnel par défaut ("je t'explique en DM") — "lien en bio" et "DM-moi" seuls sont FORMELLEMENT INTERDITS, ce ne sont jamais des CTA valides (le mot-clé→DM convertit à 12-18% contre 2-3% pour un lien en bio).`;
+
+  const ressourceRule = ctx.ressourceDM
+    ? `\nRESSOURCE CONFIRMÉE POUR LE DM : "${ctx.ressourceDM}". Tu peux utiliser un CTA mot-clé (commentaire → DM pour un carrousel/reel, réponse → DM pour une story) qui la mentionne explicitement, même en Attraction ou Connexion — c'est une vraie ressource, pas une invention.`
+    : `\nAUCUNE RESSOURCE CONFIRMÉE POUR LE DM : n'utilise JAMAIS un CTA qui promet d'envoyer un guide, une méthode, une liste ou tout autre livrable précis en DM — ce serait une promesse inventée que la créatrice ne pourrait pas tenir. Le mot-clé→DM en Conversion reste autorisé mais uniquement de façon conversationnelle ("je t'explique en DM"), jamais pour promettre un contenu précis non confirmé.`;
+
+  const ctaRule = ctaRuleBase + ressourceRule;
 
   const legendeRule =
     ctx.format === "Story"

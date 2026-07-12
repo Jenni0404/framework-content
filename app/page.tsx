@@ -69,6 +69,7 @@ export default function Home() {
   const [sujet, setSujet] = useState("");
   const [roleId, setRoleId] = useState("");
   const [preuve, setPreuve] = useState("");
+  const [ressourceDM, setRessourceDM] = useState("");
   const [voix, setVoix] = useState("");
   const [format, setFormat] = useState<Format>("Carrousel");
   const [reelType, setReelType] = useState<ReelType>("court");
@@ -133,6 +134,7 @@ export default function Home() {
       objectif,
       roleId,
       preuve: preuve.trim(),
+      ressourceDM: ressourceDM.trim(),
       format,
       reelType,
     };
@@ -396,6 +398,22 @@ export default function Home() {
                 </p>
               </div>
             )}
+
+            <div>
+              <label className="block text-sm font-medium text-ink mb-1">
+                As-tu une ressource prête à envoyer en DM ?{" "}
+                <span className="font-normal text-sage-300">(optionnel)</span>
+              </label>
+              <input
+                className={inputClass}
+                placeholder="Ex : un guide PDF sur X, une checklist, un audio..."
+                value={ressourceDM}
+                onChange={(e) => setRessourceDM(e.target.value)}
+              />
+              <p className="text-xs italic text-sage-300 mt-1">
+                Vide = le CTA ne promet jamais d&apos;envoyer quelque chose en DM.
+              </p>
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-ink mb-1">
