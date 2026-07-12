@@ -12,7 +12,7 @@ export default function CGV() {
 
         <h2 className="font-semibold pt-2">Objet</h2>
         <p>
-          [Nom] propose un accès à un outil de génération de gabarits de contenu Instagram assisté
+          Jennifer Alexandre propose un accès à un outil de génération de gabarits de contenu Instagram assisté
           par IA, contre un paiement unique donnant un accès et un nombre de générations inclus,
           des recharges pouvant être achetées séparément.
         </p>
@@ -35,16 +35,22 @@ export default function CGV() {
         <p>
           Le contenu produit par l&apos;outil est généré par intelligence artificielle et fourni à
           titre d&apos;aide à la rédaction. Il appartient à l&apos;utilisatrice de le relire, de
-          l&apos;adapter et d&apos;en vérifier l&apos;exactitude avant toute publication. [Nom] ne
-          garantit aucun résultat commercial (ventes, engagement, portée) lié à l&apos;utilisation
-          du contenu généré.
+          l&apos;adapter et d&apos;en vérifier l&apos;exactitude avant toute publication. Jennifer
+          Alexandre ne garantit aucun résultat commercial (ventes, engagement, portée) lié à
+          l&apos;utilisation du contenu généré.
         </p>
 
         <h2 className="font-semibold pt-2">Résiliation / durée d&apos;accès</h2>
-        <p>[À préciser : durée de l&apos;accès à vie, conditions de perte d&apos;accès en cas d&apos;abus, etc.]</p>
+        <p>
+          L&apos;accès à l&apos;outil est acquis à vie dès l&apos;activation du code d&apos;accès,
+          sans limite de durée. En cas d&apos;usage abusif constaté (partage du code
+          d&apos;accès à des tiers, revente de l&apos;accès, ou tentative de contournement du
+          système de paiement), Jennifer Alexandre se réserve le droit de suspendre
+          l&apos;accès concerné.
+        </p>
 
         <h2 className="font-semibold pt-2">Contact</h2>
-        <p>[Email de contact]</p>
+        <p>framework@elleastudio.fr</p>
       </div>
     </main>
   );
