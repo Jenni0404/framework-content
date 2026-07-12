@@ -86,6 +86,7 @@ export default function Home() {
   const [pourquoi, setPourquoi] = useState("");
   const [truncated, setTruncated] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [balanceWarning, setBalanceWarning] = useState("");
 
   const [library, setLibrary] = useState<LibraryEntry[]>([]);
   const [libraryOpen, setLibraryOpen] = useState(false);
@@ -165,6 +166,7 @@ export default function Home() {
       }
       setSujetChoisi(data.sujetChoisi || "");
       setHooks(data.hooks);
+      setBalanceWarning(typeof data.warning === "string" ? data.warning : "");
       setStep(2);
     } catch (err) {
       setError1(err instanceof Error ? err.message : "Erreur réseau.");
@@ -194,6 +196,7 @@ export default function Home() {
       setFullText(data.text);
       setPourquoi(typeof data.pourquoi === "string" ? data.pourquoi : "");
       setTruncated(Boolean(data.truncated));
+      setBalanceWarning(typeof data.warning === "string" ? data.warning : "");
     } catch (err) {
       setErrorFull(err instanceof Error ? err.message : "Erreur réseau.");
     } finally {
@@ -285,6 +288,12 @@ export default function Home() {
           Étape 1 : choisis ton contexte et ton angle. Étape 2 : choisis ton{" "}
           {elementLabel} parmi 3, puis récupère le post complet.
         </p>
+
+        {balanceWarning && (
+          <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md p-3 mb-6">
+            ⚠️ {balanceWarning}
+          </p>
+        )}
 
         {step === 1 && (
           <div className="space-y-4">

@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { buildHooksPrompt, parseHooksResponse, type GenContext } from "@/lib/promptEngine";
 import { checkRateLimit, getClientKey } from "@/lib/rateLimit";
+import { getCurrentClientId, getGenerationsRestantes, lowBalanceWarning } from "@/lib/auth";
 
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -29,6 +30,21 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, error: "Décris au moins ton offre et ta cliente avant de générer." },
       { status: 400 }
+    );
+  }
+
+  const clientId = await getCurrentClientId();
+  if (!clientId) {
+    return NextResponse.json({ ok: false, error: "Non autorisé." }, { status: 401 });
+  }
+  const remaining = await getGenerationsRestantes(clientId);
+  if (remaining === null) {
+    return NextResponse.json({ ok: false, error: "Compte introuvable." }, { status: 401 });
+  }
+  if (remaining <= 0) {
+    return NextResponse.json(
+      { ok: false, error: "Tu as utilisé toutes tes générations. Achète un pack de générations pour continuer." },
+      { status: 402 }
     );
   }
 
@@ -64,7 +80,13 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({ ok: true, sujetChoisi, hooks });
+    return NextResponse.json({
+      ok: true,
+      sujetChoisi,
+      hooks,
+      remaining,
+      warning: lowBalanceWarning(remaining),
+    });
   } catch (err) {
     return NextResponse.json(
       {

@@ -2,6 +2,8 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { buildFullPrompt, parseFullResponse, type GenContext } from "@/lib/promptEngine";
 import { checkRateLimit, getClientKey } from "@/lib/rateLimit";
+import { getCurrentClientId, getGenerationsRestantes, lowBalanceWarning } from "@/lib/auth";
+import { sql } from "@/lib/db";
 
 interface GenerateFullBody extends GenContext {
   chosenHook: string;
@@ -33,6 +35,21 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, error: "Le hook choisi est manquant." },
       { status: 400 }
+    );
+  }
+
+  const clientId = await getCurrentClientId();
+  if (!clientId) {
+    return NextResponse.json({ ok: false, error: "Non autorisé." }, { status: 401 });
+  }
+  const remainingBeforeGen = await getGenerationsRestantes(clientId);
+  if (remainingBeforeGen === null) {
+    return NextResponse.json({ ok: false, error: "Compte introuvable." }, { status: 401 });
+  }
+  if (remainingBeforeGen <= 0) {
+    return NextResponse.json(
+      { ok: false, error: "Tu as utilisé toutes tes générations. Achète un pack de générations pour continuer." },
+      { status: 402 }
     );
   }
 
@@ -82,11 +99,24 @@ export async function POST(req: Request) {
 
     const { text: gabarit, pourquoi } = parseFullResponse(text.trim());
 
+    // Décompte atomique : la clause WHERE empêche de descendre sous 0 même en
+    // cas de double requête simultanée. Le post est déjà généré à ce stade
+    // (coût API déjà engagé) donc on le renvoie dans tous les cas, même si le
+    // solde était déjà tombé à 0 entre-temps.
+    const decRows = await sql`
+      UPDATE clients SET generations_restantes = generations_restantes - 1
+      WHERE id = ${clientId} AND generations_restantes > 0
+      RETURNING generations_restantes
+    `;
+    const remaining = decRows.length > 0 ? (decRows[0].generations_restantes as number) : 0;
+
     return NextResponse.json({
       ok: true,
       text: gabarit,
       pourquoi,
       truncated: stopReason === "max_tokens",
+      remaining,
+      warning: lowBalanceWarning(remaining),
       debug: { stop_reason: stopReason, usage: lastUsage },
     });
   } catch (err) {
