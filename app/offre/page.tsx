@@ -81,6 +81,47 @@ const BENEFICES = [
   `Des packs de générations si t'as besoin de plus, une fois les ${GENERATIONS_INCLUSES} épuisées.`,
 ];
 
+const COMPARATIF = [
+  {
+    seul: "Un seul angle générique, recyclé à chaque fois",
+    systeme: "49 angles, celui qui correspond exactement à ton objectif",
+  },
+  {
+    seul: "Peut inventer un chiffre ou un témoignage pour combler le vide",
+    systeme: "Un vrai filet anti-invention : sans donnée fournie, un angle honnête à la place",
+  },
+  {
+    seul: "Le même traitement pour un carrousel, un reel ou une story",
+    systeme: "Une structure différente pour chaque format, jamais mélangée",
+  },
+  {
+    seul: "Un CTA générique, lien en bio ou DM-moi",
+    systeme: "Un CTA différent selon ton objectif, jamais générique",
+  },
+  {
+    seul: "Il faut savoir formuler le bon prompt",
+    systeme: "Le système pense la structure à ta place",
+  },
+];
+
+const CAPTURES_OUTIL = [
+  {
+    src: "/screenshots/questionnaire.png",
+    alt: "Le questionnaire réel de Framework Content : type d'offre, objectif, angle précis",
+    label: "Étapes 1-2 : ton contexte",
+  },
+  {
+    src: "/screenshots/hooks.png",
+    alt: "Les 3 hooks générés par Framework Content, prêts à choisir",
+    label: "Étape 4 : tes 3 hooks",
+  },
+  {
+    src: "/screenshots/post-complet.png",
+    alt: "Un post complet généré par Framework Content, slides et légende",
+    label: "Étape 5 : le post complet",
+  },
+];
+
 const CE_QUE_CE_NEST_PAS = [
   "Pas de calendrier éditorial automatisé",
   "Pas de publication automatique",
@@ -210,6 +251,20 @@ function GridTexture({ className, patternId }: { className?: string; patternId: 
   );
 }
 
+function BrowserFrame({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="rounded-md border border-sage-100 overflow-hidden bg-white">
+      <div className="flex items-center gap-1.5 border-b border-sage-100 bg-sage-50 px-3 py-2">
+        <span className="h-2 w-2 rounded-full border border-sage-300" aria-hidden="true" />
+        <span className="h-2 w-2 rounded-full border border-sage-300" aria-hidden="true" />
+        <span className="h-2 w-2 rounded-full border border-sage-300" aria-hidden="true" />
+      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} width={700} height={900} className="w-full h-auto block" />
+    </div>
+  );
+}
+
 function LeafAccent({ className }: { className?: string }) {
   return (
     <svg
@@ -333,6 +388,47 @@ export default function Offre() {
           </ul>
         </section>
 
+        <section className="bg-sage-50 rounded-md p-6 sm:p-8 space-y-6">
+          <Reveal>
+            <h2 className="font-serif text-[28px] sm:text-[32px] font-semibold text-sage-800">
+              Pourquoi pas juste ChatGPT ou Claude,{" "}
+              <em className="font-serif italic font-medium">tout seuls ?</em>
+            </h2>
+          </Reveal>
+          <Reveal>
+            <div className="rounded-md overflow-hidden border border-sage-100">
+              <div className="hidden sm:grid sm:grid-cols-2">
+                <div className="bg-sage-100 px-5 py-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-sage-700">
+                    ChatGPT, Claude et consorts seuls
+                  </p>
+                </div>
+                <div className="bg-white px-5 py-3 border-l border-sage-100">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-sage-800">
+                    Framework Content
+                  </p>
+                </div>
+              </div>
+              <div className="divide-y divide-sage-100">
+                {COMPARATIF.map((row) => (
+                  <div key={row.seul} className="grid sm:grid-cols-2">
+                    <div className="bg-sage-100 px-5 py-4 flex items-start gap-2">
+                      <span className="text-sage-700/70 shrink-0" aria-hidden="true">×</span>
+                      <p className="text-sm text-ink/70 leading-relaxed">{row.seul}</p>
+                    </div>
+                    <div className="bg-white px-5 py-4 flex items-start gap-2 border-l-0 sm:border-l border-sage-100 border-t sm:border-t-0">
+                      <span className="text-sage-700 shrink-0 mt-0.5">
+                        <CheckIcon />
+                      </span>
+                      <p className="text-sm font-medium text-sage-800 leading-relaxed">{row.systeme}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
         <section className="relative isolate overflow-hidden space-y-4 bg-sage-800 text-cream rounded-md p-6 sm:p-8">
           <GridTexture
             patternId="grid-systeme"
@@ -399,6 +495,22 @@ export default function Offre() {
               ))}
             </ol>
           </Reveal>
+        </section>
+
+        <section className="space-y-6">
+          <Reveal>
+            <p className="text-xs font-semibold uppercase tracking-wide text-sage-700 text-center">
+              L&apos;outil, en vrai, pas une maquette
+            </p>
+          </Reveal>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {CAPTURES_OUTIL.map((cap, i) => (
+              <Reveal key={cap.src} delay={i * 0.08} className="space-y-2">
+                <BrowserFrame src={cap.src} alt={cap.alt} />
+                <p className="text-xs text-sage-700 text-center font-medium">{cap.label}</p>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         <section className="bg-sage-50 rounded-md p-6 sm:p-8 space-y-6">
@@ -536,6 +648,10 @@ export default function Offre() {
             <Link href="/confidentialite" className="hover:underline">Confidentialité</Link>
             <Link href="/cgv" className="hover:underline">CGV</Link>
           </div>
+          <p className="inline-flex items-center gap-1.5 text-[11px] text-sage-700">
+            <span className="h-1.5 w-1.5 border border-sage-700 rotate-45" aria-hidden="true" />
+            Propulsé par Claude (Anthropic)
+          </p>
         </footer>
       </div>
 
