@@ -31,5 +31,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# skill Claude Code locale, pas liée au produit
-.claude/skills/
+# dossier Claude Code local (sessions, cache, identifiants) — skills/ excepté, versionné avec le code
+.claude/*
+!.claude/skills/
+# skills Ellea Studio : présents localement, jamais versionnés dans ce repo (projets distincts)
+.claude/skills/ellea/
