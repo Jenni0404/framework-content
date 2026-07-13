@@ -454,21 +454,21 @@ export default function Offre() {
                 te sortir un truc générique.
               </p>
             </Reveal>
-            <ul className="grid gap-4 sm:grid-cols-2 pt-2">
+            <ul className="grid gap-px bg-cream/[0.14] rounded-xl overflow-hidden sm:grid-cols-2 lg:grid-cols-4 mt-10">
               {SYSTEME_FEATURES.map((f, i) => (
-                <Reveal key={f.titre} as="li" delay={i * 0.08} className="space-y-2">
+                <Reveal key={f.titre} as="li" delay={i * 0.08} className="bg-sage-800 p-6 space-y-2">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth={1.5}
-                    className="h-6 w-6"
+                    className="h-7 w-7 opacity-[0.85]"
                     aria-hidden="true"
                   >
                     {f.icon}
                   </svg>
-                  <p className="text-[14.5px] font-extrabold">{f.titre}</p>
-                  <p className="text-[12.5px] leading-relaxed opacity-90">{f.texte}</p>
+                  <p className="text-[14.5px] font-extrabold leading-tight">{f.titre}</p>
+                  <p className="text-[12.5px] leading-relaxed opacity-[0.72]">{f.texte}</p>
                 </Reveal>
               ))}
             </ul>
