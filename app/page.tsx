@@ -53,11 +53,96 @@ const FORMATS: { value: Format; label: string }[] = [
 ];
 
 const inputClass =
-  "w-full border border-sage-100 rounded-md p-2 text-sm bg-white focus:outline-none focus:border-sage-700";
+  "w-full border border-sage-100 rounded-md p-2.5 text-sm bg-white focus:outline-none focus:border-sage-700 transition-colors";
 const toggleBaseClass = "flex-1 rounded-md border border-sage-100 py-2 text-sm font-medium transition-colors";
 const toggleActiveClass = "bg-sage-700 text-cream border-sage-700";
 const ghostButtonClass =
   "rounded-md border border-sage-700 text-sage-700 font-medium hover:bg-sage-50 transition-colors";
+
+// Le post généré n'a pas de format machine-strict (contrairement aux hooks) : le modèle
+// écrit "Slide 1 :", "Légende :", "Frame 2 :" de façon relativement libre, avec en plus des
+// artefacts Markdown non nettoyés (titres "#"/"##", "---", "**" mal équilibrés). On nettoie
+// ces artefacts puis on repère les labels SI présents, mais on ne casse jamais l'affichage
+// si le modèle dévie du patron — dégradation en paragraphes normaux plutôt qu'un parseur rigide.
+const CONTENT_LABEL_RE =
+  /^\s*(Carrousel|Reel|Story|Slide\s*\d+|Frame\s*\d+|Légende|Sticker|Pont\s*(?:Story\s*→?\s*)?DM|Texte(?:\s*à\s*l'écran)?|Hook\s*dit(?:\s*et\s*affiché)?(?:\s*à\s*l'écran)?)\s*[:\-—.]?\s*(.*)$/i;
+const HASHTAG_LINE_RE = /^(\s*#[^\s#]+\s*)+$/;
+const MARKDOWN_HEADING_RE = /^#{1,6}\s+/;
+const MARKDOWN_RULE_LINE_RE = /^\s*[-*_]{3,}\s*$/;
+
+interface ContentBlock {
+  label: string | null;
+  lines: string[];
+}
+
+function parseContentBlocks(text: string): ContentBlock[] {
+  const cleaned = text
+    .split("\n")
+    .filter((line) => !MARKDOWN_RULE_LINE_RE.test(line))
+    .map((line) => line.replace(MARKDOWN_HEADING_RE, "").replace(/\*+/g, ""))
+    .join("\n");
+
+  return cleaned
+    .trim()
+    .split(/\n{2,}/)
+    .map((block): ContentBlock => {
+      const lines = block.split("\n");
+      const match = lines[0]?.match(CONTENT_LABEL_RE);
+      if (match) {
+        const [, label, rest] = match;
+        return {
+          label: label.trim(),
+          lines: [rest, ...lines.slice(1)].filter((l) => l.trim() !== ""),
+        };
+      }
+      return { label: null, lines: lines.filter((l) => l.trim() !== "") };
+    })
+    .filter((b) => b.label || b.lines.length > 0);
+}
+
+function GeneratedContent({ text, compact = false }: { text: string; compact?: boolean }) {
+  const blocks = parseContentBlocks(text);
+  const bodySize = compact ? "text-xs" : "text-sm";
+  const labelSize = compact ? "text-[10px]" : "text-[11px]";
+  return (
+    <div className={compact ? "space-y-3" : "space-y-4"}>
+      {blocks.map((block, i) => {
+        const hashtagIndex = block.lines.findIndex((l) => HASHTAG_LINE_RE.test(l.trim()));
+        const bodyLines = hashtagIndex === -1 ? block.lines : block.lines.slice(0, hashtagIndex);
+        const hashtagLine = hashtagIndex === -1 ? null : block.lines[hashtagIndex];
+        return (
+          <div key={i}>
+            {block.label && (
+              <p className={`${labelSize} font-bold uppercase tracking-wide text-sage-700 mb-1`}>
+                {block.label}
+              </p>
+            )}
+            {bodyLines.length > 0 && (
+              <p className={`${bodySize} text-ink leading-relaxed whitespace-pre-wrap`}>
+                {bodyLines.join("\n")}
+              </p>
+            )}
+            {hashtagLine && (
+              <div className="flex flex-wrap gap-1.5 mt-2.5">
+                {hashtagLine
+                  .trim()
+                  .split(/\s+/)
+                  .map((tag, j) => (
+                    <span
+                      key={j}
+                      className={`${bodySize} text-sage-700 bg-white border border-sage-100 rounded-full px-2.5 py-0.5`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function Home() {
   const [formOptions, setFormOptions] = useState<FormOptions | null>(null);
@@ -302,10 +387,29 @@ export default function Home() {
   return (
     <main className="min-h-screen p-8 flex justify-center bg-cream">
       <div className="w-full max-w-2xl">
-        <h1 className="font-serif text-3xl font-semibold text-sage-800 mb-1">Framework Content</h1>
+        <h1 className="font-serif text-3xl font-semibold text-sage-800 mb-4">Framework Content</h1>
+
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className={`text-xs font-bold rounded-full px-3 py-1 transition-colors ${
+              step === 1 ? "bg-sage-700 text-cream" : "bg-sage-50 text-sage-700 border border-sage-100"
+            }`}
+          >
+            1 · Contexte
+          </span>
+          <span className="h-px w-4 bg-sage-100" aria-hidden="true" />
+          <span
+            className={`text-xs font-bold rounded-full px-3 py-1 transition-colors ${
+              step === 2 ? "bg-sage-700 text-cream" : "bg-sage-50 text-sage-700 border border-sage-100"
+            }`}
+          >
+            2 · Résultat
+          </span>
+        </div>
         <p className="text-sm text-sage-300 mb-6">
-          Étape 1 : choisis ton contexte et ton angle. Étape 2 : choisis ton{" "}
-          {elementLabel} parmi 3, puis récupère le post complet.
+          {step === 1
+            ? "Décris ton contexte et choisis ton angle."
+            : `Choisis ton ${elementLabel} parmi 3, puis récupère le post complet.`}
         </p>
 
         {balanceWarning && (
@@ -315,7 +419,7 @@ export default function Home() {
         )}
 
         {step === 1 && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-sm font-medium text-ink mb-1">Type d&apos;offre</label>
@@ -517,18 +621,25 @@ export default function Home() {
               <p className="text-sm font-medium text-sage-700">Sujet choisi : {sujetChoisi}</p>
             )}
 
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {hooks.map((hook, i) => (
                 <button
                   key={i}
                   type="button"
                   disabled={loadingFull}
                   onClick={() => handleHookClick(hook)}
-                  className={`w-full text-left border rounded-lg p-3 text-sm hover:border-sage-700 disabled:opacity-50 transition-colors ${
+                  className={`w-full flex items-start gap-3 text-left border rounded-lg p-3.5 text-sm leading-relaxed hover:border-sage-700 disabled:opacity-50 transition-colors ${
                     chosenHook === hook ? "border-sage-700 bg-sage-50" : "border-sage-100"
                   }`}
                 >
-                  {hook}
+                  <span
+                    className={`shrink-0 flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold ${
+                      chosenHook === hook ? "bg-sage-700 text-cream" : "bg-sage-50 text-sage-700"
+                    }`}
+                  >
+                    {i + 1}
+                  </span>
+                  <span>{hook}</span>
                 </button>
               ))}
             </div>
@@ -558,9 +669,9 @@ export default function Home() {
                     ⚠️ Le texte a peut-être été coupé malgré la relance automatique. Régénère si besoin.
                   </p>
                 )}
-                <pre className="whitespace-pre-wrap border border-sage-100 rounded-md p-4 text-sm bg-sage-50 text-ink">
-                  {fullText}
-                </pre>
+                <div className="border border-sage-100 rounded-md p-4 bg-sage-50">
+                  <GeneratedContent text={fullText} />
+                </div>
                 <div className="flex gap-2 mt-2">
                   <button type="button" onClick={handleCopy} className={`flex-1 py-2 text-sm ${ghostButtonClass}`}>
                     {copied ? "Copié ✓" : "📋 Copier"}
@@ -653,7 +764,7 @@ export default function Home() {
                       </div>
                       {expanded && (
                         <div className="mt-2 pt-2 border-t border-sage-100">
-                          <pre className="whitespace-pre-wrap text-xs">{entry.texte}</pre>
+                          <GeneratedContent text={entry.texte} compact />
                           <div className="flex gap-2 mt-2">
                             <button
                               type="button"
