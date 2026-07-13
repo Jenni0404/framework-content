@@ -208,7 +208,7 @@ export default function Offre() {
             Un carrousel, un reel ou une story qui te ressemble vraiment, idée en tête ou
             pas, grâce à un système éditorial propulsé par l&apos;IA.
           </p>
-          <p className="bg-sage-700 text-cream text-center text-xs font-semibold uppercase tracking-wide rounded-md py-2 px-3">
+          <p className="text-center text-xs font-semibold uppercase tracking-wide text-sage-800 border-t border-b border-sage-300 py-2">
             Ne perds plus une minute à chercher quoi écrire
           </p>
         </header>
@@ -313,23 +313,27 @@ export default function Offre() {
           </div>
         </section>
 
-        <section className="relative isolate bg-cream space-y-4 border border-sage-100 rounded-md p-6 sm:p-8 shadow-sm text-center">
-          <p className="text-sm font-semibold text-sage-700">Offre de lancement : accès à vie, paiement unique</p>
+        <section className="relative isolate bg-cream space-y-4 border border-sage-700 rounded-md p-6 sm:p-8 text-center">
+          <div className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wide text-sage-800">
+            <span className="h-2 w-2 border border-sage-700 rotate-45" aria-hidden="true" />
+            Offre de lancement
+          </div>
+          <p className="text-sm font-semibold text-sage-700">accès à vie, paiement unique</p>
           <p className="text-xs text-sage-700">Offre de lancement limitée aux 50 premières clientes</p>
           <p className="flex items-center justify-center gap-3">
             <span className="text-lg text-sage-300 line-through">{PRIX_BARRE}</span>
             <span className="font-serif text-5xl font-semibold text-sage-800">{PRIX_FONDATRICE}</span>
           </p>
-          <ul className="text-xs text-ink/80 space-y-1 max-w-xs mx-auto text-left">
-            <li className="flex items-center gap-2">
+          <ul className="text-xs text-ink/80 max-w-xs mx-auto text-left border-t border-sage-100">
+            <li className="flex items-center gap-2 border-b border-sage-100 py-2">
               <span className="text-sage-700"><CheckIcon /></span>
               {GENERATIONS_INCLUSES} générations incluses
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2 border-b border-sage-100 py-2">
               <span className="text-sage-700"><CheckIcon /></span>
               Des packs de générations abordables si besoin
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2 border-b border-sage-100 py-2">
               <span className="text-sage-700"><CheckIcon /></span>
               Je l&apos;utilise moi-même pour mes propres posts
             </li>
