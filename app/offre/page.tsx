@@ -84,19 +84,19 @@ const BENEFICES = [
 const COMPARATIF = [
   {
     seul: "Un seul angle générique, recyclé à chaque fois",
-    systeme: "49 angles, celui qui correspond exactement à ton objectif",
+    systeme: "Toujours l'angle qui correspond exactement à ton objectif, parmi 49",
   },
   {
     seul: "Peut inventer un chiffre ou un témoignage pour combler le vide",
-    systeme: "Un vrai filet anti-invention : sans donnée fournie, un angle honnête à la place",
+    systeme: "Un angle honnête, à la taille de ce que tu as vraiment",
   },
   {
     seul: "Le même traitement pour un carrousel, un reel ou une story",
-    systeme: "Une structure différente pour chaque format, jamais mélangée",
+    systeme: "Des slides qui tiennent seules, une légende qui n'est jamais un résumé",
   },
   {
     seul: "Un CTA générique, lien en bio ou DM-moi",
-    systeme: "Un CTA différent selon ton objectif, jamais générique",
+    systeme: "Le bon appel à l'action, celui qui correspond vraiment à ton objectif",
   },
   {
     seul: "Il faut savoir formuler le bon prompt",
