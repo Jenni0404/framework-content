@@ -12,30 +12,30 @@ export default function MentionsLegales() {
         <h2 className="font-semibold pt-2">Éditeur du site</h2>
         <p>
           [Nom / raison sociale], [statut juridique, ex. auto-entreprise], [adresse], [numéro
-          SIRET], [email de contact]. Directrice de la publication : [Nom].
+          SIRET], [email de contact]. Directrice de la publication : Jennifer Alexandre.
         </p>
 
         <h2 className="font-semibold pt-2">Hébergement</h2>
-        <p>[Nom de l&apos;hébergeur], [adresse de l&apos;hébergeur].</p>
+        <p>Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis.</p>
 
         <h2 className="font-semibold pt-2">Propriété intellectuelle</h2>
         <p>
           La structure du site, les textes, la méthodologie éditoriale (taxonomie des angles,
-          règles de génération) sont la propriété de [Nom]. Le contenu généré via l&apos;outil est
-          mis à disposition de l&apos;utilisatrice pour son usage propre, conformément aux
-          conditions générales de vente.
+          règles de génération) sont la propriété de Jennifer Alexandre. Le contenu généré via
+          l&apos;outil est mis à disposition de l&apos;utilisatrice pour son usage propre,
+          conformément aux conditions générales de vente.
         </p>
 
         <h2 className="font-semibold pt-2">Contenu généré par IA</h2>
         <p>
           Les textes produits par l&apos;outil sont générés par un modèle d&apos;intelligence
           artificielle (Anthropic Claude). Ils sont fournis à titre d&apos;aide à la rédaction et
-          doivent être relus avant toute publication. [Nom] ne garantit ni l&apos;exactitude
-          absolue, ni la performance commerciale du contenu généré.
+          doivent être relus avant toute publication. Jennifer Alexandre ne garantit ni
+          l&apos;exactitude absolue, ni la performance commerciale du contenu généré.
         </p>
 
         <h2 className="font-semibold pt-2">Contact</h2>
-        <p>[Email de contact]</p>
+        <p>framework@elleastudio.fr</p>
       </div>
     </main>
   );
