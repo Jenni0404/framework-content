@@ -323,7 +323,7 @@ export default function Offre() {
               <div className="flex flex-wrap items-center justify-center gap-3.5">
                 <a
                   href="#offre"
-                  className="inline-flex items-center gap-2 rounded-md bg-cream text-sage-800 font-bold text-sm px-7 py-4 border border-sage-700 shadow-[5px_5px_0_theme(colors.sage.700)] transition-[transform,box-shadow] duration-200 ease-out hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_theme(colors.sage.700)]"
+                  className="inline-flex items-center gap-2 rounded-md bg-cream text-sage-800 font-bold text-[15px] px-7 py-4 border border-sage-700 shadow-[5px_5px_0_theme(colors.sage.700)] transition-[transform,box-shadow] duration-200 ease-out hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_theme(colors.sage.700)]"
                 >
                   Je veux mon système éditorial
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4" aria-hidden="true">
@@ -332,7 +332,7 @@ export default function Offre() {
                 </a>
                 <a
                   href="#comment"
-                  className="inline-flex items-center rounded-md border border-sage-300 text-cream font-bold text-sm px-7 py-4 transition-colors duration-200 ease-out hover:bg-cream/[0.08]"
+                  className="inline-flex items-center rounded-md border border-sage-300 text-cream font-bold text-[15px] px-7 py-4 transition-colors duration-200 ease-out hover:bg-cream/[0.08]"
                 >
                   Comment ça marche
                 </a>
@@ -356,9 +356,12 @@ export default function Offre() {
 
         <section className="grid gap-8 sm:grid-cols-[0.85fr_1.15fr] sm:items-start">
           <Reveal className="space-y-4">
-            <h2 className="font-serif text-[28px] sm:text-[32px] font-semibold leading-tight text-sage-800">
-              Ce que tu vis,{" "}
-              <em className="font-serif italic font-medium">ce que tu gagnes</em>
+            <p className="text-[11px] font-extrabold uppercase tracking-wide text-sage-700 mb-[18px]">
+              Ce que tu vis, ce que tu gagnes
+            </p>
+            <h2 className="font-serif text-[clamp(27px,3.4vw,34px)] font-semibold leading-tight tracking-tight text-sage-800">
+              Ce qui manque, ce n&apos;est pas{" "}
+              <em className="font-serif italic font-medium">des idées.</em>
             </h2>
             <p className="text-[15.5px] text-ink/90 leading-relaxed">
               La plupart des outils d&apos;IA génèrent un texte à partir de rien de précis :
@@ -390,7 +393,7 @@ export default function Offre() {
 
         <section className="bg-sage-50 rounded-md p-6 sm:p-8 space-y-6">
           <Reveal>
-            <h2 className="font-serif text-[28px] sm:text-[32px] font-semibold text-sage-800">
+            <h2 className="font-serif text-[clamp(27px,3.4vw,34px)] font-semibold text-sage-800">
               Pourquoi pas juste ChatGPT ou Claude,{" "}
               <em className="font-serif italic font-medium">tout seuls ?</em>
             </h2>
@@ -436,15 +439,19 @@ export default function Offre() {
           />
           <div className="relative z-10 space-y-4">
             <Reveal>
-              <h2 className="font-serif text-[28px] sm:text-[32px] font-semibold flex items-center gap-2.5">
-                <SystemGraphic className="h-6 w-6 shrink-0 text-cream/60" />
+              <p className="text-[11px] font-extrabold uppercase tracking-wide text-sage-300 mb-[18px] flex items-center gap-2">
+                <SystemGraphic className="h-4 w-4 shrink-0" />
                 {SYSTEME_NOM}
+              </p>
+              <h2 className="font-serif text-[clamp(27px,3.4vw,34px)] font-semibold">
+                Quatre règles,{" "}
+                <em className="font-serif italic font-medium">non négociables.</em>
               </h2>
             </Reveal>
             <Reveal delay={0.05}>
               <p className="text-[15.5px] leading-relaxed opacity-95">
                 Le Système combine l&apos;IA et des règles éditoriales strictes pour ne jamais
-                te sortir un truc générique. Quatre règles, non négociables :
+                te sortir un truc générique.
               </p>
             </Reveal>
             <ul className="grid gap-4 sm:grid-cols-2 pt-2">
@@ -460,8 +467,8 @@ export default function Offre() {
                   >
                     {f.icon}
                   </svg>
-                  <p className="text-sm font-semibold">{f.titre}</p>
-                  <p className="text-xs leading-relaxed opacity-90">{f.texte}</p>
+                  <p className="text-[14.5px] font-extrabold">{f.titre}</p>
+                  <p className="text-[12.5px] leading-relaxed opacity-90">{f.texte}</p>
                 </Reveal>
               ))}
             </ul>
@@ -470,8 +477,12 @@ export default function Offre() {
 
         <section id="comment" className="space-y-8">
           <Reveal>
-            <h2 className="font-serif text-[28px] sm:text-[32px] font-semibold text-sage-800">
+            <p className="text-[11px] font-extrabold uppercase tracking-wide text-sage-700 mb-[18px]">
               Comment ça marche
+            </p>
+            <h2 className="font-serif text-[clamp(27px,3.4vw,34px)] font-semibold text-sage-800">
+              D&apos;une idée floue à{" "}
+              <em className="font-serif italic font-medium">un post publiable.</em>
             </h2>
           </Reveal>
           <Reveal>
@@ -515,17 +526,22 @@ export default function Offre() {
 
         <section className="bg-sage-50 rounded-md p-6 sm:p-8 space-y-6">
           <Reveal>
-            <h2 className="font-serif text-[28px] sm:text-[32px] font-semibold text-sage-800 flex items-center gap-2.5">
-              <LeafAccent className="h-5 w-5 text-sage-700/70" />
-              Ce que tu obtiens
+            <p className="text-[11px] font-extrabold uppercase tracking-wide text-sage-700 mb-[18px]">
+              Le périmètre, clairement
+            </p>
+            <h2 className="font-serif text-[clamp(27px,3.4vw,34px)] font-semibold text-sage-800">
+              <LeafAccent className="inline-block h-5 w-5 text-sage-700/70 align-[-0.1em] mr-2" />
+              Ce que tu obtiens,{" "}
+              <em className="font-serif italic font-medium">et ce que ce n&apos;est pas.</em>
             </h2>
           </Reveal>
           <Reveal>
             <div className="grid gap-px sm:grid-cols-[1.2fr_0.8fr] rounded-md overflow-hidden border border-sage-100">
               <div className="bg-white p-5 sm:p-6">
+                <p className="font-serif text-[15.5px] text-sage-800 mb-3">Ce que tu obtiens</p>
                 <ul className="space-y-3">
                   {BENEFICES.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-sm text-ink/90 leading-relaxed">
+                    <li key={b} className="flex items-start gap-2 text-[14.5px] text-ink/90 leading-relaxed">
                       <span className="mt-0.5 text-sage-700">
                         <CheckIcon />
                       </span>
@@ -535,12 +551,12 @@ export default function Offre() {
                 </ul>
               </div>
               <div className="bg-sage-100 p-5 sm:p-6">
-                <p className="text-xs font-semibold uppercase tracking-wide text-sage-700 mb-3">
+                <p className="font-serif text-[15.5px] text-sage-700 mb-3">
                   Ce que ce n&apos;est pas, pour l&apos;instant
                 </p>
                 <ul className="space-y-1.5">
                   {CE_QUE_CE_NEST_PAS.map((item) => (
-                    <li key={item} className="text-sm text-ink/70 leading-relaxed">
+                    <li key={item} className="text-[13px] text-ink/70 leading-relaxed">
                       × {item}
                     </li>
                   ))}
@@ -558,12 +574,13 @@ export default function Offre() {
           <Reveal className="relative z-10">
             <div className="grid gap-8 text-center sm:grid-cols-[1fr_auto] sm:items-center sm:text-left">
               <div>
-                <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide bg-cream/10 rounded-full px-3 py-1 mb-4">
+                <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide bg-cream/10 rounded-full px-3 py-1 mb-4">
                   <span className="h-2 w-2 border border-cream rotate-45" aria-hidden="true" />
                   Offre de lancement
                 </div>
-                <p className="font-serif text-xl sm:text-2xl font-semibold mb-1.5">
-                  accès à vie, paiement unique
+                <p className="font-serif text-[24px] font-semibold mb-1.5">
+                  Accès à vie,{" "}
+                  <em className="font-serif italic font-medium">paiement unique.</em>
                 </p>
                 <p className="text-xs text-cream/85 mb-4">
                   Offre de lancement limitée aux 50 premières clientes
@@ -584,11 +601,11 @@ export default function Offre() {
                 </ul>
               </div>
               <div className="text-center">
-                <p className="text-base text-cream/50 line-through">{PRIX_BARRE}</p>
-                <p className="font-serif text-6xl font-bold text-cream mb-4">{PRIX_FONDATRICE}</p>
+                <p className="text-[15px] text-cream/50 line-through">{PRIX_BARRE}</p>
+                <p className="font-serif text-[52px] leading-none font-bold text-cream mb-4">{PRIX_FONDATRICE}</p>
                 <a
                   href={STRIPE_PAYMENT_LINK}
-                  className="inline-flex items-center justify-center rounded-md bg-cream text-sage-800 font-bold text-sm px-7 py-3.5 hover:bg-cream/90 transition-colors duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
+                  className="inline-flex items-center justify-center rounded-md bg-cream text-sage-800 font-bold text-[15px] px-7 py-3.5 hover:bg-cream/90 transition-colors duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
                 >
                   Je veux mon système éditorial
                 </a>
@@ -627,8 +644,9 @@ export default function Offre() {
         </section>
 
         <section className="bg-sage-50 rounded-md space-y-2 text-center p-6 sm:p-8">
-          <h2 className="font-serif text-lg font-semibold text-sage-800">
-            Ton contenu Instagram n&apos;a plus besoin de te prendre la tête.
+          <h2 className="font-serif text-[clamp(27px,3.4vw,34px)] font-semibold text-sage-800 max-w-xl mx-auto">
+            Ton contenu Instagram n&apos;a plus besoin de{" "}
+            <em className="font-serif italic font-medium">te prendre la tête.</em>
           </h2>
           <a href={STRIPE_PAYMENT_LINK} className="text-sage-700 font-semibold hover:underline">
             Rejoins les 50 premières clientes →
