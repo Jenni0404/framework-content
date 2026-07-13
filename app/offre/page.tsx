@@ -169,6 +169,71 @@ function SystemGraphic({ className }: { className?: string }) {
   );
 }
 
+function ProcessWheel({ className, bgFill = "#F1F4EE" }: { className?: string; bgFill?: string }) {
+  const nodes = [
+    { x: 100, y: 20 },
+    { x: 176, y: 75 },
+    { x: 147, y: 165 },
+    { x: 53, y: 165 },
+    { x: 24, y: 75 },
+  ];
+  const arcs = [
+    "M100 20 Q132.3 55.5 176 75",
+    "M176 75 Q152.3 117 147 165",
+    "M147 165 Q100 155 53 165",
+    "M53 165 Q47.7 117 24 75",
+    "M24 75 Q67.7 55.5 100 20",
+  ];
+  return (
+    <svg viewBox="0 0 200 200" className={className} aria-hidden="true">
+      <defs>
+        <marker
+          id="wheelArrow"
+          viewBox="0 0 10 10"
+          refX="8"
+          refY="5"
+          markerWidth="7"
+          markerHeight="7"
+          orient="auto-start-reverse"
+        >
+          <path d="M0 0L10 5L0 10Z" fill="currentColor" />
+        </marker>
+      </defs>
+      <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth={1} opacity={0.25} />
+      <rect
+        x="94"
+        y="94"
+        width="12"
+        height="12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1}
+        opacity={0.5}
+        transform="rotate(45 100 100)"
+      />
+      {arcs.map((d, i) => (
+        <path
+          key={i}
+          d={d}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.3}
+          opacity={0.8}
+          markerEnd="url(#wheelArrow)"
+        />
+      ))}
+      {nodes.map((n, i) => (
+        <g key={i}>
+          <circle cx={n.x} cy={n.y} r={14} fill={bgFill} stroke="currentColor" strokeWidth={1.5} />
+          <text x={n.x} y={n.y + 4.5} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+            {i + 1}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 function LeafAccent({ className }: { className?: string }) {
   return (
     <svg
@@ -268,14 +333,15 @@ export default function Offre() {
           </ul>
         </section>
 
-        <section className="space-y-4">
+        <section className="bg-sage-50 rounded-md space-y-6 p-6 sm:p-8">
           <h2 className="font-serif text-xl font-semibold text-sage-800">
             Comment ça marche
           </h2>
-          <ol className="text-left space-y-3 bg-white border border-sage-100 rounded-md p-5">
+          <ProcessWheel className="h-44 w-44 mx-auto text-sage-700" bgFill="#F8F4EF" />
+          <ol className="text-left space-y-3">
             {COMMENT_CA_MARCHE.map((etape, i) => (
               <li key={etape} className="flex items-start gap-3 text-sm text-ink/90 leading-relaxed">
-                <span className="shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-sage-50 text-sage-800 text-xs font-semibold">
+                <span className="shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-cream border border-sage-700 text-sage-800 text-xs font-semibold">
                   {i + 1}
                 </span>
                 <span>{etape}</span>
@@ -375,7 +441,7 @@ export default function Offre() {
           </div>
         </section>
 
-        <section className="space-y-2 text-center">
+        <section className="bg-sage-50 rounded-md space-y-2 text-center p-6 sm:p-8">
           <h2 className="font-serif text-lg font-semibold text-sage-800">
             Ton contenu Instagram n&apos;a plus besoin de te prendre la tête.
           </h2>
